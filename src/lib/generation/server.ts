@@ -86,6 +86,8 @@ export const RATE_LIMITS = {
   // to a generation have no per-generation cap (spec Phase 4.3).
   refine: { windowSeconds: 60, max: 10 },
   refineDaily: { windowSeconds: 86_400, max: 60 },
+  // Checkout and portal sessions: each one is a call to Stripe.
+  billing: { windowSeconds: 60, max: 6 },
 } as const;
 
 export type RateLimitName = keyof typeof RATE_LIMITS;

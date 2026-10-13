@@ -368,10 +368,11 @@
       "guestBody": "Napravi besplatan nalog da zadržiš sve što napraviš i dobiješ 5 generisanja svakog meseca.",
       "guestAction": "Napravi besplatan nalog",
       "freeTitle": "Iskorišćeno je svih 5 generisanja ovog meseca",
-      "freeBody": "Limit se obnavlja {date}. Pro plan, sa 100 generisanja mesečno, stiže u jednoj od narednih faza izrade.",
+      "freeBody": "Kvota se obnavlja {date}. Pro donosi 100 generisanja mesečno i sve dužine.",
       "proTitle": "Iskorišćeno je svih 100 generisanja ovog meseca",
       "proBody": "Limit se obnavlja {date}.",
-      "planAction": "Pogledaj svoj plan"
+      "planAction": "Pogledaj svoj plan",
+      "upgradeAction": "Pređi na Pro"
     },
     "errors": {
       "unauthenticated": "Sesija je istekla. Prijavi se ponovo da nastaviš.",
@@ -612,11 +613,63 @@
       "lengthsUpTo": "Do: {length}",
       "resets": "Limit se obnavlja",
       "resetsNever": "Nikad — gostujući limit važi za celu sesiju"
+    }
+  },
+  "billing": {
+    "title": "Naplata",
+    "description": "Tvoj plan i pretplata. Plaćanja idu preko Stripe-a u test režimu.",
+    "testMode": "Demo — test režim, bez stvarne naplate",
+    "testCard": "Test režim: plati karticom 4242 4242 4242 4242, sa bilo kojim budućim datumom isteka i bilo kojim CVC kodom. Pravi novac se ne prenosi.",
+    "notConfigured": "Naplata nije povezana na ovoj instalaciji, pa je prelazak na Pro isključen.",
+    "pricing": {
+      "label": "Planovi",
+      "perMonth": "mesečno",
+      "current": "Trenutni plan",
+      "taglines": {
+        "free": "Da isprobaš Fanout.",
+        "pro": "Za objavljivanje svake nedelje."
+      },
+      "features": {
+        "generations": "{count, plural, one {# generisanje} few {# generisanja} other {# generisanja}} mesečno",
+        "formats": "Pet formata po generisanju",
+        "lengthsUpTo": "Dužine do nivoa: {length}",
+        "lengthsAll": "Sve dužine, uključujući dugu",
+        "modelFree": "Brzi AI model",
+        "modelPro": "Jači AI model",
+        "library": "Biblioteka, editor, dorada i izvoz"
+      }
     },
-    "billing": {
-      "title": "Naplata",
-      "badge": "Stiže u kasnijoj fazi",
-      "description": "Prelazak na Pro (12 $ mesečno, Stripe test režim — bez stvarne naplate) dodaje se u jednoj od narednih faza izrade. Danas nema šta da se plati niti da se podešava."
+    "status": {
+      "guest": "Ovo je gostujuća sesija. Prvo napravi besplatan nalog — onda možeš da se pretplatiš.",
+      "free": "Tvoj plan je Free.",
+      "pro": "Tvoj plan je Pro. Pretplata se obnavlja {date}.",
+      "proNoDate": "Tvoj plan je Pro.",
+      "cancelling": "Tvoj plan je Pro do {date}. Pretplata je otkazana i neće se obnoviti; posle toga nalog se vraća na Free.",
+      "paymentFailed": "Poslednje plaćanje nije prošlo, pa je nalog za sada na Free planu. Ažuriraj karticu da vratiš Pro.",
+      "ended": "Pro pretplata je istekla. Tvoj plan je Free.",
+      "unavailable": "Podaci o naplati nisu mogli da se učitaju. Osveži stranicu i pokušaj ponovo."
+    },
+    "actions": {
+      "upgrade": "Pređi na Pro",
+      "manage": "Upravljaj pretplatom",
+      "createAccount": "Napravi besplatan nalog",
+      "redirecting": "Otvaranje Stripe-a…"
+    },
+    "return": {
+      "confirming": "Plaćanje je primljeno. Čeka se potvrda od Stripe-a — obično traje nekoliko sekundi.",
+      "confirmed": "Tvoj plan je sada Pro.",
+      "slow": "Stripe još nije potvrdio plaćanje. Osveži stranicu za koji trenutak — ništa nije izgubljeno.",
+      "cancelled": "Plaćanje je otkazano. Ništa nije naplaćeno."
+    },
+    "errors": {
+      "unauthenticated": "Sesija je istekla. Prijavi se ponovo da nastaviš.",
+      "guest_not_allowed": "Prvo napravi besplatan nalog — gostujuće sesije ne mogu da se pretplate.",
+      "already_subscribed": "Već postoji aktivna Pro pretplata. Koristi „Upravljaj pretplatom“.",
+      "no_subscription": "Još nema pretplate kojom bi se upravljalo.",
+      "not_configured": "Naplata nije povezana na ovoj instalaciji.",
+      "rate_limited": "Malo je prebrzo. Sačekaj minut i pokušaj ponovo.",
+      "server_error": "Stripe nije dostupan. Ništa nije naplaćeno — pokušaj ponovo.",
+      "network_error": "Veza je prekinuta. Ništa nije naplaćeno — pokušaj ponovo."
     }
   }
 }

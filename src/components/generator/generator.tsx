@@ -521,7 +521,7 @@ function QuotaBanner({
 }) {
   const t = useTranslations("generate.quota");
   const kind = guest || plan === "guest" ? "guest" : plan === "pro" ? "pro" : "free";
-  const href: Route = kind === "guest" ? "/app/upgrade" : "/app/settings";
+  const href = (kind === "guest" ? "/app/upgrade" : "/app/settings#billing") as Route;
 
   return (
     <div
@@ -536,7 +536,11 @@ function QuotaBanner({
       </div>
       <Button asChild className="shrink-0">
         <Link href={href}>
-          {kind === "guest" ? t("guestAction") : t("planAction")}
+          {kind === "guest"
+            ? t("guestAction")
+            : kind === "free"
+              ? t("upgradeAction")
+              : t("planAction")}
           <ArrowRight aria-hidden="true" />
         </Link>
       </Button>

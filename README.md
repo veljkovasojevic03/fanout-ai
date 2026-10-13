@@ -4,9 +4,9 @@
 once: a blog post (with SEO meta), a LinkedIn post, an Instagram caption, an email newsletter and
 an X thread. UI in English and Serbian.
 
-> **Status: in development.** This is a portfolio project built phase by phase. Phases 0–4 are
-> done (foundation, data layer and auth, app shell, generator, library and editor); billing,
-> scheduling and publishing, and the landing page are not built yet. The full README (demo link,
+> **Status: in development.** This is a portfolio project built phase by phase. Phases 0–5 are
+> done (foundation, data layer and auth, app shell, generator, library and editor, plans and
+> billing); scheduling and publishing, and the landing page are not built yet. The full README (demo link,
 > architecture diagram, case study) lands in the final phase.
 
 ## What exists today
@@ -37,6 +37,10 @@ an X thread. UI in English and Serbian.
   as a suggestion you accept or discard (and can undo); capped per generation and rate limited
 - Export to `.txt`, `.md` and `.docx` (real Word headings, lists and links)
 - `/design/library` — the list, the editor and the previews with sample data
+- Plans and billing in Stripe **test mode**: Checkout, Customer Portal and a webhook that is the
+  only thing able to change a plan — signature verified on the raw body, idempotent, plan derived
+  from the subscription status in the database
+- `/design/billing` — the pricing cards and Settings → Billing in every subscription state
 
 ## Run locally
 
@@ -58,6 +62,16 @@ pnpm exec supabase login
 pnpm exec supabase link --project-ref <your-project-ref>
 pnpm exec supabase db push      # applies supabase/migrations
 ```
+
+To try billing locally (Stripe test mode only — a live key is refused):
+
+```bash
+# STRIPE_SECRET_KEY=sk_test_… in .env.local, then:
+pnpm stripe:setup               # creates the Pro product + $12/month price, prints STRIPE_PRO_PRICE_ID
+stripe listen --forward-to localhost:3000/api/stripe/webhook   # prints STRIPE_WEBHOOK_SECRET
+```
+
+Pay with card `4242 4242 4242 4242`, any future expiry date and any CVC.
 
 ## Checks
 

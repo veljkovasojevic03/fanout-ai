@@ -14,6 +14,7 @@
     "test:watch": "vitest",
     "i18n:check": "node scripts/i18n-check.ts",
     "smoke": "node scripts/smoke-api.ts",
+    "stripe:setup": "node scripts/stripe-setup.ts",
     "test:db": "vitest run --config vitest.db.config.mts",
     "test:db:remote": "vitest run --config vitest.db.remote.config.mts",
     "format": "prettier --write .",
@@ -43,6 +44,7 @@
     "remark-parse": "^11.0.0",
     "server-only": "^0.0.1",
     "sonner": "^2.0.8",
+    "stripe": "^23.0.0",
     "tailwind-merge": "^3.7.0",
     "unified": "^11.0.5",
     "zod": "^4.6.6"

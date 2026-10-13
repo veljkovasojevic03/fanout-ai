@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { getFormatter, getNow, getTranslations } from "next-intl/server";
 
+import { BillingSection } from "@/components/billing/billing-section";
 import { ProfileForm } from "@/components/settings/profile-form";
 import { PageHeader } from "@/components/shell/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UsageMeter } from "@/components/ui/usage-meter";
 import { getAppContext, nextResetDate } from "@/lib/auth/session";
+import { getBillingState, getPlanCatalog } from "@/lib/billing/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("settings");
@@ -22,13 +24,24 @@ function Stat({ label, children }: { label: string; children: React.ReactNode })
   );
 }
 
-export default async function SettingsPage() {
+export default async function SettingsPage({ searchParams }: PageProps<"/app/settings">) {
   const context = await getAppContext("/app/settings");
   if (!context) return null;
 
   const { user, account, guest } = context;
   const { profile, limit, usage } = account;
-  const [t, format, now] = await Promise.all([getTranslations(), getFormatter(), getNow()]);
+  const [t, format, now, params, billing, catalog] = await Promise.all([
+    getTranslations(),
+    getFormatter(),
+    getNow(),
+    searchParams,
+    getBillingState(),
+    getPlanCatalog(),
+  ]);
+
+  // Set by Stripe's return URLs. It only chooses which notice to show.
+  const returned =
+    params.billing === "success" || params.billing === "cancelled" ? params.billing : null;
 
   return (
     <>
@@ -114,16 +127,13 @@ export default async function SettingsPage() {
           </CardContent>
         </Card>
 
-        <Card variant="ghost">
-          <CardHeader>
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <CardTitle>{t("settings.billing.title")}</CardTitle>
-              <Badge variant="warn">{t("settings.billing.badge")}</Badge>
-            </div>
-            <CardDescription>{t("settings.billing.description")}</CardDescription>
-          </CardHeader>
-          <CardContent />
-        </Card>
+        <BillingSection
+          plan={profile.plan}
+          guest={guest}
+          billing={billing}
+          catalog={catalog}
+          returned={returned}
+        />
       </div>
     </>
   );

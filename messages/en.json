@@ -368,10 +368,11 @@
       "guestBody": "Create a free account to keep everything you made and get 5 generations every month.",
       "guestAction": "Create free account",
       "freeTitle": "You've used your 5 generations this month",
-      "freeBody": "Your allowance resets on {date}. The Pro plan, with 100 generations a month, arrives in a later build phase.",
+      "freeBody": "Your allowance resets on {date}. Pro gives you 100 generations a month and every length.",
       "proTitle": "You've used your 100 generations this month",
       "proBody": "Your allowance resets on {date}.",
-      "planAction": "View your plan"
+      "planAction": "View your plan",
+      "upgradeAction": "Upgrade to Pro"
     },
     "errors": {
       "unauthenticated": "Your session has ended. Log in again to continue.",
@@ -612,11 +613,63 @@
       "lengthsUpTo": "Up to {length}",
       "resets": "Allowance resets",
       "resetsNever": "Never — guest allowance is for the whole session"
+    }
+  },
+  "billing": {
+    "title": "Billing",
+    "description": "Your plan and subscription. Payments run through Stripe in test mode.",
+    "testMode": "Demo — test mode, no real charges",
+    "testCard": "Test mode: pay with card 4242 4242 4242 4242, any future expiry date and any CVC. No real money moves.",
+    "notConfigured": "Billing isn't connected on this deployment, so upgrading is switched off.",
+    "pricing": {
+      "label": "Plans",
+      "perMonth": "per month",
+      "current": "Current plan",
+      "taglines": {
+        "free": "For trying Fanout out.",
+        "pro": "For publishing every week."
+      },
+      "features": {
+        "generations": "{count, plural, one {# generation} other {# generations}} a month",
+        "formats": "Five formats per generation",
+        "lengthsUpTo": "Lengths up to {length}",
+        "lengthsAll": "Every length, including Long",
+        "modelFree": "The fast AI model",
+        "modelPro": "The stronger AI model",
+        "library": "Library, editor, refine and export"
+      }
     },
-    "billing": {
-      "title": "Billing",
-      "badge": "Coming in a later phase",
-      "description": "Upgrading to Pro ($12/month, Stripe test mode — no real charges) is added in a later build phase. There is nothing to pay or manage today."
+    "status": {
+      "guest": "You're in a guest session. Create a free account first — then you can subscribe.",
+      "free": "You're on the Free plan.",
+      "pro": "You're on Pro. Your subscription renews on {date}.",
+      "proNoDate": "You're on Pro.",
+      "cancelling": "You're on Pro until {date}. The subscription is cancelled and won't renew; after that your account goes back to Free.",
+      "paymentFailed": "Your last payment didn't go through, so your account is on Free for now. Update your card to get Pro back.",
+      "ended": "Your Pro subscription has ended. You're on the Free plan.",
+      "unavailable": "We couldn't load your billing details. Reload the page to try again."
+    },
+    "actions": {
+      "upgrade": "Upgrade to Pro",
+      "manage": "Manage subscription",
+      "createAccount": "Create free account",
+      "redirecting": "Opening Stripe…"
+    },
+    "return": {
+      "confirming": "Payment received. Waiting for Stripe to confirm it — this usually takes a few seconds.",
+      "confirmed": "You're on Pro now.",
+      "slow": "Stripe hasn't confirmed the payment yet. Reload this page in a moment — nothing is lost.",
+      "cancelled": "Checkout was cancelled. Nothing was charged."
+    },
+    "errors": {
+      "unauthenticated": "Your session has ended. Log in again to continue.",
+      "guest_not_allowed": "Create a free account first — guest sessions can't subscribe.",
+      "already_subscribed": "You already have an active Pro subscription. Use Manage subscription instead.",
+      "no_subscription": "There is no subscription to manage yet.",
+      "not_configured": "Billing isn't connected on this deployment.",
+      "rate_limited": "You're going a bit fast. Wait a minute and try again.",
+      "server_error": "We couldn't reach Stripe. Nothing was charged — try again.",
+      "network_error": "The connection dropped. Nothing was charged — try again."
     }
   }
 }
