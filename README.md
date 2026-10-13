@@ -23,6 +23,12 @@ an X thread. UI in English and Serbian.
 - Complete English and Serbian (Latin) UI — type-checked message keys and `pnpm i18n:check`
 - A "Demo is waking up" screen for when the free-tier database is unreachable
 - `/design/shell` — the shell and dashboard rendered with sample data, in every state
+- The generator: one click streams up to five formats in parallel over SSE, with stop, copy,
+  capped regenerate, save to library, live counters and a format check per piece
+- Sample mode (hand-written fixtures, streamed) by default; Live mode (Claude) when
+  `ANTHROPIC_API_KEY` is set and the global daily cap has room — same UI, same protocol
+- A URL source fetcher hardened against SSRF, and prompts that treat fetched text as untrusted
+- `/design/generator` — the streaming cards running on the public Sample-mode demo endpoint
 
 ## Run locally
 
@@ -54,6 +60,8 @@ pnpm test
 pnpm i18n:check       # en and sr have the same keys, ICU arguments and rich-text tags
 pnpm test:db          # RLS, grants and quota — in-process Postgres, no Docker needed
 pnpm test:db:remote   # the same suite against SUPABASE_DB_URL (every test is rolled back)
+pnpm smoke            # end-to-end API check against a running app + the real Supabase project;
+                      # creates a throwaway user and deletes it again (pnpm smoke http://localhost:3000)
 pnpm build
 ```
 

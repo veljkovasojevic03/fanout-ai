@@ -21,7 +21,7 @@ zod · Vitest · Playwright · pnpm. Deploy: Vercel Hobby. CI/cron: GitHub Actio
 - `src/app/` — routes, layouts, error boundaries, `globals.css` (design tokens)
 - `src/components/ui/` — internal kit (Button, Card, Field, Input, Select, Dialog, Toast…)
 - `src/components/{brand,layout,shell,auth,…}/` — wordmark, app shell, feature components
-- `src/lib/` — `supabase/` clients, `auth/` actions; server-only modules `import "server-only"`
+- `src/lib/` — `supabase/` `auth/` `generation/` `llm/` `sample/` `source/` `content/`; server code imports `server-only`
 - `src/proxy.ts` — session refresh + first-line redirect for `/app/*` (Next 16 "proxy")
 - `supabase/migrations/` — the only place the DB schema changes; covered by `tests/db/`
 - `messages/` — `en.json`, `sr.json` (identical keys); `src/i18n/` — locale config and checks

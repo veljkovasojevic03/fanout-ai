@@ -13,6 +13,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "i18n:check": "node scripts/i18n-check.ts",
+    "smoke": "node scripts/smoke-api.ts",
     "test:db": "vitest run --config vitest.db.config.mts",
     "test:db:remote": "vitest run --config vitest.db.remote.config.mts",
     "format": "prettier --write .",
@@ -22,11 +23,14 @@
     "node": ">=22.18.0"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
     "@marsidev/react-turnstile": "^1.6.2",
+    "@mozilla/readability": "^0.6.0",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.117.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "linkedom": "^0.18.13",
     "lucide-react": "^1.55.0",
     "next": "16.4.0",
     "next-intl": "^4.14.9",

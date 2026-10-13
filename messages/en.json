@@ -235,7 +235,7 @@
         "product_launch": {
           "title": "Product launch",
           "description": "Announce something new with a clear benefit and a call to action.",
-          "topic": "We are launching a new product — here is what it does and who it is for"
+          "topic": "Launching a habit tracker that takes ten seconds a day"
         },
         "weekly_newsletter": {
           "title": "Weekly newsletter",
@@ -245,12 +245,12 @@
         "thought_leadership": {
           "title": "Thought-leadership post",
           "description": "Share a strong opinion from your own experience.",
-          "topic": "An unpopular opinion from my work, and the experience behind it"
+          "topic": "Why small teams should ship every week"
         },
         "event_announcement": {
           "title": "Event announcement",
           "description": "Invite people to an event and give them a reason to come.",
-          "topic": "Join us at our upcoming event — what to expect and how to sign up"
+          "topic": "Free online workshop: pricing your freelance work with confidence"
         }
       }
     },
@@ -269,17 +269,135 @@
   "generate": {
     "metaTitle": "Generate",
     "title": "Generate",
-    "description": "The generator is the next build phase. Presets already prefill it — this is what it will start with.",
-    "presetLoaded": "Preset loaded",
-    "noPresetTitle": "No preset selected",
-    "noPresetDescription": "Pick a quick-start preset on the dashboard to see how it prefills the generator.",
-    "backToDashboard": "Back to dashboard",
-    "fields": {
+    "description": "One idea in, five formats out. One click counts as one generation, however many formats you pick.",
+    "form": {
+      "legend": "What should Fanout write?",
+      "presetLoaded": "Preset: {name}",
       "topic": "Topic",
+      "topicPlaceholder": "What do you want to write about?",
       "tone": "Tone",
       "length": "Length",
+      "lengthLocked": "{length} is available on the Pro plan.",
       "language": "Content language",
-      "formats": "Formats"
+      "languageHint": "The language Fanout writes in. It does not have to match the interface.",
+      "keywords": "Keywords",
+      "keywordsHint": "Optional, up to 8. Press Enter or comma to add one.",
+      "keywordsPlaceholder": "Add a keyword",
+      "keywordsFull": "8 of 8 keywords added",
+      "keywordRemove": "Remove keyword {keyword}",
+      "formats": "Formats",
+      "formatsHint": "Pick at least one.",
+      "source": "Source to repurpose",
+      "sourceHint": "Optional. Give Fanout a page or some text to draw on.",
+      "sourceNone": "None",
+      "sourceUrl": "URL",
+      "sourceText": "Pasted text",
+      "sourceUrlLabel": "Page address",
+      "sourceUrlPlaceholder": "https://example.com/article",
+      "sourceUrlHint": "Public https pages only. Fanout reads the page's text and uses it as reference.",
+      "sourceTextLabel": "Text to repurpose",
+      "sourceTextPlaceholder": "Paste an article, notes or a transcript…",
+      "submit": "Generate",
+      "submitting": "Starting…",
+      "remaining": "{count, plural, one {# generation left} other {# generations left}}",
+      "errors": {
+        "topic_required": "Tell Fanout what to write about.",
+        "topic_too_long": "Keep the topic under 300 characters.",
+        "formats_required": "Pick at least one format.",
+        "url_required": "Enter the address of the page.",
+        "url_invalid": "Enter a full address that starts with https://",
+        "text_required": "Paste the text you want to repurpose.",
+        "text_too_long": "Keep the pasted text under 8,000 characters."
+      }
+    },
+    "results": {
+      "title": "Results",
+      "sampleBadge": "Sample output",
+      "sampleNote": "Pre-written demo content, streamed like the real thing. No AI model was called.",
+      "liveBadge": "Live",
+      "liveNote": "Written for you by {model}.",
+      "regenerations": "{left} of {max} regenerations left"
+    },
+    "card": {
+      "region": "{format} output",
+      "waiting": "Starting…",
+      "streaming": "Writing…",
+      "done": "Done",
+      "stopped": "Stopped",
+      "failed": "Interrupted",
+      "stop": "Stop",
+      "copy": "Copy",
+      "copied": "Copied to clipboard",
+      "copyFailed": "Couldn't copy automatically. Select the text and copy it yourself.",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Saved",
+      "savedToast": "Saved to your library",
+      "regenerate": "Regenerate",
+      "retry": "Retry",
+      "partialKept": "The text written so far has been kept.",
+      "words": "{count, plural, one {# word} other {# words}}",
+      "chars": "{count, plural, one {# character} other {# characters}}",
+      "posts": "{count, plural, one {# post} other {# posts}}",
+      "postCounter": "Post {post}: {chars} of {max} characters",
+      "postsLabel": "Characters per post"
+    },
+    "warnings": {
+      "title": "Format check",
+      "meta_missing": "The SEO block (meta title and description) is missing.",
+      "meta_title_too_long": "The SEO title is {actual} characters; the limit is {max}.",
+      "meta_description_too_long": "The SEO description is {actual} characters; the limit is {max}.",
+      "title_missing": "The post has no main title.",
+      "sections_out_of_range": "The post has {actual, plural, one {# section} other {# sections}}; aim for {min} to {max}.",
+      "hashtags_too_many": "There are {actual} hashtags; use at most {max}.",
+      "hashtags_out_of_range": "There are {actual, plural, one {# hashtag} other {# hashtags}}; aim for {min} to {max}.",
+      "hashtags_not_last_line": "Hashtags should all sit on the last line.",
+      "subject_missing": "The email has no subject line.",
+      "preheader_missing": "The email has no preheader line.",
+      "posts_out_of_range": "The thread has {actual, plural, one {# post} other {# posts}}; aim for {min} to {max}.",
+      "post_too_long": "Post {post} is {actual} characters; the limit on X is {max}.",
+      "words_out_of_range": "This is {actual, plural, one {# word} other {# words}}; the target is {min} to {max}."
+    },
+    "quota": {
+      "guestTitle": "You've used your 3 guest generations",
+      "guestBody": "Create a free account to keep everything you made and get 5 generations every month.",
+      "guestAction": "Create free account",
+      "freeTitle": "You've used your 5 generations this month",
+      "freeBody": "Your allowance resets on {date}. The Pro plan, with 100 generations a month, arrives in a later build phase.",
+      "proTitle": "You've used your 100 generations this month",
+      "proBody": "Your allowance resets on {date}.",
+      "planAction": "View your plan"
+    },
+    "errors": {
+      "unauthenticated": "Your session has ended. Log in again to continue.",
+      "invalid_input": "Something in the form isn't valid. Check it and try again.",
+      "rate_limited": "You're going a bit fast. Wait a minute and try again.",
+      "quota_exhausted": "You've used all the generations in your plan.",
+      "length_not_allowed": "That length isn't included in your plan. Pick a shorter one.",
+      "not_configured": "The generator isn't set up on this deployment yet.",
+      "server_error": "Something went wrong on our side. Nothing was counted. Try again.",
+      "not_found": "We couldn't find that generation. Start a new one.",
+      "already_streamed": "This piece was already generated. Use Regenerate for a new version.",
+      "type_not_selected": "That format wasn't part of this generation.",
+      "not_started": "This piece hasn't been generated yet.",
+      "regeneration_cap_reached": "You've used all 10 regenerations for this generation. Start a new one for more.",
+      "save_failed": "We couldn't save that to your library. Try again.",
+      "network_error": "The connection dropped while Fanout was writing.",
+      "source_invalid_url": "That doesn't look like a valid web address.",
+      "source_blocked": "Fanout can't read that address. Use a public https page.",
+      "source_unreachable": "We couldn't reach that page. Check the address and try again.",
+      "source_timeout": "That page took too long to respond. Try another, or paste the text instead.",
+      "source_too_many_redirects": "That address redirects too many times. Use the final address of the page.",
+      "source_http_error": "That page returned an error. Check that it's public and try again.",
+      "source_unsupported_type": "That address isn't a web page or plain text. Paste the text instead.",
+      "source_too_large": "That page is too large to read. Paste the part you need instead.",
+      "source_empty": "We couldn't find readable text on that page. Paste the text instead.",
+      "llm_rate_limited": "The AI service is busy right now. Wait a moment and retry.",
+      "llm_overloaded": "The AI service is overloaded right now. Wait a moment and retry.",
+      "llm_unavailable": "We couldn't reach the AI service. Retry in a moment.",
+      "llm_refused": "The AI declined to write this piece. Try rephrasing your topic.",
+      "llm_misconfigured": "The AI service isn't set up correctly on this deployment.",
+      "stream_failed": "Something interrupted the writing. Retry to try again."
     }
   },
   "library": {

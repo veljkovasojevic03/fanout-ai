@@ -70,3 +70,32 @@ One line per non-obvious decision: what was chosen and why. Newest at the bottom
 - **Content-type icons are generic glyphs, not brand logos** — no third-party trademarks in the product UI.
 - **Server-rendered times use UTC** — the server does not know the visitor's time zone; relative times ("2 hours ago") are unaffected, and user-local times arrive with the calendar in Phase 6.
 - **Mobile top bar shows the mark only and the dashboard repeats the guest call to action** — the full wordmark and the sidebar do not fit at 375px.
+
+## Phase 3 — Generator (Sample + Live, parallel streaming)
+
+- **`start_generation()` does quota, plan gating, the daily cap and the insert in one SQL function** — one transaction, so a failed insert rolls the quota back and a refused request (wrong length, bad source) never costs a generation. It calls `consume_generation()` internally, which stays the single place the counter moves.
+- **The URL source is fetched before `start_generation()`** — a page that cannot be read must not use up a generation.
+- **New table `generation_streams` with primary key `(generation_id, type)`** — "each piece streams once" is a database guarantee, not an in-memory check that two server instances could both pass.
+- **Regenerate is a separate endpoint and shares the 10-per-generation budget with refine** (`generations.refinements_used`) — checked and incremented under a row lock on the generation.
+- **A retry after a dropped connection goes through the regenerate path** — the first stream was already claimed; the client switches path by itself once if the two get out of step.
+- **A live generation takes one slot of the global daily cap, whatever number of formats it has** — matches "one click = one generation"; worst case is 5 streams + 10 regenerations per slot, each with a small `max_tokens`.
+- **Mode is decided once, at `POST /api/generate`, and stored** — every stream of a generation is the same mode; if the API key disappears later, streams fall back to sample and `meta.mode` says so.
+- **Sample and live output go through the same `createStreamResponse()`** — that single code path is why the UI cannot tell them apart except for `meta.mode`.
+- **Contract warnings are computed on the server and sent in the `done` event**; the live counters in the card use the same pure functions from `lib/content/contracts.ts`, so the two cannot disagree.
+- **Blog word-target is not checked for sample output** — fixtures are written at one (Short) length whatever the slider says; every other contract rule is enforced on them by tests.
+- **Fixtures answer three of the dashboard presets**, matched by normalised topic text in either UI language; any other topic gets a template that says outright it is a sample and never pretends to be a finished piece about the topic.
+- **Three preset topics were made concrete** (habit tracker, ship weekly, pricing workshop) — a hand-written fixture needs a specific subject to be good.
+- **Streaming text is rendered as plain pre-wrapped text, not Markdown** — rendering Markdown on every token for five cards is wasteful; the Markdown preview arrives with the editor in Phase 4.
+- **Deltas are batched per animation frame on the client** — five parallel streams would otherwise re-render on every token.
+- **The stream region is `aria-live="polite"` with `aria-busy` while streaming** — a screen reader announces the finished piece once, not every word.
+- **The first stream is started on a zero-delay timer** — React's development double-mount would otherwise send it twice and burn a regeneration.
+- **SSRF: allow-list global unicast instead of block-listing bad ranges, vet every resolved address, then connect to exactly that address** (pinned `lookup`) — closes DNS rebinding; unparseable addresses fail closed. Redirects are followed manually and re-vetted.
+- **`node:https` for the source fetch, not `fetch`** — pinning the resolved IP needs a custom `lookup`; `Accept-Encoding: identity` so a small compressed body cannot inflate past the 1 MB cap.
+- **Only port 443 and no credentials in source URLs** — nothing legitimate needs more, and other ports are how SSRF reaches internal services.
+- **`<source>` wrapping plus `neutraliseSource()`** — the model is told the block is untrusted, and the text cannot close the tag to escape it. User text never enters the system prompt.
+- **Models: `claude-haiku-4-5` (Free/guest) and `claude-sonnet-5-5` (Pro)**, as the spec's plan routing requires; the spec's `claude-haiku-5-5` does not exist. Thinking-capable models get `effort: "low"` and extra token headroom; Haiku 4.5 gets neither (it rejects `effort`).
+- **No server-side refusal fallback** (`fallbacks`) — it is a beta parameter tied to specific models, and the model here is configurable per deployment. A refusal is handled as the `llm_refused` error with a retry.
+- **Rate limits fail closed** — if `check_rate_limit` cannot be reached the request is refused, not let through unmetered.
+- **`POST /api/demo/stream` is public but can only replay fixtures chosen by id** — no free text, no DB write, no model call; still rate limited per hashed IP. Built now so the cards can be verified without a session; the landing page reuses it in Phase 7.
+- **`pnpm smoke` creates and deletes a throwaway user with the service-role key** — CAPTCHA blocks scripted sign-in, and an API-level end-to-end run (real cookies, RLS, RPCs, streaming) catches what unit tests cannot.
+- **Save-to-library is a Server Action running as the user** — RLS allows the insert only for themselves and only linked to their own generation; title and word count are derived on the server.

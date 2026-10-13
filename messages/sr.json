@@ -235,7 +235,7 @@
         "product_launch": {
           "title": "Lansiranje proizvoda",
           "description": "Najavi nešto novo uz jasnu korist i poziv na akciju.",
-          "topic": "Lansiramo novi proizvod — evo šta radi i kome je namenjen"
+          "topic": "Lansiramo aplikaciju za navike kojoj treba deset sekundi dnevno"
         },
         "weekly_newsletter": {
           "title": "Nedeljni bilten",
@@ -245,12 +245,12 @@
         "thought_leadership": {
           "title": "Stručno mišljenje",
           "description": "Podeli jasan stav iz sopstvenog iskustva.",
-          "topic": "Jedno nepopularno mišljenje iz mog posla i iskustvo koje stoji iza njega"
+          "topic": "Zašto mali timovi treba da isporučuju svake nedelje"
         },
         "event_announcement": {
           "title": "Najava događaja",
           "description": "Pozovi ljude na događaj i daj im razlog da dođu.",
-          "topic": "Pridruži nam se na predstojećem događaju — šta te čeka i kako da se prijaviš"
+          "topic": "Besplatna online radionica: kako da sa sigurnošću odrediš cenu svog frilens rada"
         }
       }
     },
@@ -269,17 +269,135 @@
   "generate": {
     "metaTitle": "Generiši",
     "title": "Generiši",
-    "description": "Generator stiže u sledećoj fazi izrade. Šabloni ga već popunjavaju — ovako će izgledati početne vrednosti.",
-    "presetLoaded": "Šablon učitan",
-    "noPresetTitle": "Nijedan šablon nije izabran",
-    "noPresetDescription": "Izaberi šablon za brzi početak na pregledu da vidiš kako popunjava generator.",
-    "backToDashboard": "Nazad na pregled",
-    "fields": {
+    "description": "Jedna ideja uđe, pet formata izađe. Jedan klik se računa kao jedno generisanje, koliko god formata da izabereš.",
+    "form": {
+      "legend": "Šta Fanout treba da napiše?",
+      "presetLoaded": "Šablon: {name}",
       "topic": "Tema",
+      "topicPlaceholder": "O čemu želiš da pišeš?",
       "tone": "Ton",
       "length": "Dužina",
+      "lengthLocked": "Dužina „{length}“ je dostupna u Pro planu.",
       "language": "Jezik sadržaja",
-      "formats": "Formati"
+      "languageHint": "Jezik na kom Fanout piše. Ne mora da bude isti kao jezik interfejsa.",
+      "keywords": "Ključne reči",
+      "keywordsHint": "Opciono, najviše 8. Pritisni Enter ili zarez da dodaš.",
+      "keywordsPlaceholder": "Dodaj ključnu reč",
+      "keywordsFull": "Dodato 8 od 8 ključnih reči",
+      "keywordRemove": "Ukloni ključnu reč {keyword}",
+      "formats": "Formati",
+      "formatsHint": "Izaberi bar jedan.",
+      "source": "Izvor za preradu",
+      "sourceHint": "Opciono. Daj Fanoutu stranicu ili tekst na koji će se osloniti.",
+      "sourceNone": "Bez izvora",
+      "sourceUrl": "URL",
+      "sourceText": "Nalepljen tekst",
+      "sourceUrlLabel": "Adresa stranice",
+      "sourceUrlPlaceholder": "https://primer.rs/clanak",
+      "sourceUrlHint": "Samo javne https stranice. Fanout pročita tekst stranice i koristi ga kao osnovu.",
+      "sourceTextLabel": "Tekst za preradu",
+      "sourceTextPlaceholder": "Nalepi članak, beleške ili transkript…",
+      "submit": "Generiši",
+      "submitting": "Pokrećem…",
+      "remaining": "{count, plural, one {Preostalo # generisanje} few {Preostala # generisanja} other {Preostalo # generisanja}}",
+      "errors": {
+        "topic_required": "Napiši Fanoutu o čemu da piše.",
+        "topic_too_long": "Tema može imati najviše 300 znakova.",
+        "formats_required": "Izaberi bar jedan format.",
+        "url_required": "Unesi adresu stranice.",
+        "url_invalid": "Unesi punu adresu koja počinje sa https://",
+        "text_required": "Nalepi tekst koji želiš da preradiš.",
+        "text_too_long": "Nalepljeni tekst može imati najviše 8.000 znakova."
+      }
+    },
+    "results": {
+      "title": "Rezultati",
+      "sampleBadge": "Primer izlaza",
+      "sampleNote": "Unapred napisan demo sadržaj, ispisan kao da nastaje uživo. Nijedan AI model nije pozvan.",
+      "liveBadge": "Uživo",
+      "liveNote": "Za tebe piše {model}.",
+      "regenerations": "Preostalo regenerisanja: {left} od {max}"
+    },
+    "card": {
+      "region": "Izlaz: {format}",
+      "waiting": "Pokrećem…",
+      "streaming": "Pišem…",
+      "done": "Gotovo",
+      "stopped": "Zaustavljeno",
+      "failed": "Prekinuto",
+      "stop": "Zaustavi",
+      "copy": "Kopiraj",
+      "copied": "Kopirano",
+      "copyFailed": "Automatsko kopiranje nije uspelo. Označi tekst i kopiraj ga ručno.",
+      "save": "Sačuvaj",
+      "saving": "Čuvam…",
+      "saved": "Sačuvano",
+      "savedToast": "Sačuvano u tvojoj biblioteci",
+      "regenerate": "Regeneriši",
+      "retry": "Pokušaj ponovo",
+      "partialKept": "Do sada napisani tekst je zadržan.",
+      "words": "{count, plural, one {# reč} few {# reči} other {# reči}}",
+      "chars": "{count, plural, one {# znak} few {# znaka} other {# znakova}}",
+      "posts": "{count, plural, one {# objava} few {# objave} other {# objava}}",
+      "postCounter": "Objava {post}: {chars} od {max} znakova",
+      "postsLabel": "Broj znakova po objavi"
+    },
+    "warnings": {
+      "title": "Provera formata",
+      "meta_missing": "Nedostaje SEO blok (meta naslov i opis).",
+      "meta_title_too_long": "SEO naslov ima {actual} znakova; ograničenje je {max}.",
+      "meta_description_too_long": "SEO opis ima {actual} znakova; ograničenje je {max}.",
+      "title_missing": "Tekst nema glavni naslov.",
+      "sections_out_of_range": "Tekst ima {actual, plural, one {# celinu} few {# celine} other {# celina}}; ciljaj {min} do {max}.",
+      "hashtags_too_many": "Ima {actual} heštegova; koristi najviše {max}.",
+      "hashtags_out_of_range": "Tekst ima {actual, plural, one {# hešteg} few {# heštega} other {# heštegova}}; ciljaj {min} do {max}.",
+      "hashtags_not_last_line": "Svi heštegovi treba da budu u poslednjem redu.",
+      "subject_missing": "Email nema red sa naslovom (Subject).",
+      "preheader_missing": "Email nema red sa najavom (Preheader).",
+      "posts_out_of_range": "Nit ima {actual, plural, one {# objavu} few {# objave} other {# objava}}; ciljaj {min} do {max}.",
+      "post_too_long": "Objava {post} ima {actual} znakova; ograničenje na X-u je {max}.",
+      "words_out_of_range": "Tekst ima {actual, plural, one {# reč} few {# reči} other {# reči}}; cilj je {min} do {max}."
+    },
+    "quota": {
+      "guestTitle": "Iskorišćena su sva 3 gostujuća generisanja",
+      "guestBody": "Napravi besplatan nalog da zadržiš sve što napraviš i dobiješ 5 generisanja svakog meseca.",
+      "guestAction": "Napravi besplatan nalog",
+      "freeTitle": "Iskorišćeno je svih 5 generisanja ovog meseca",
+      "freeBody": "Limit se obnavlja {date}. Pro plan, sa 100 generisanja mesečno, stiže u jednoj od narednih faza izrade.",
+      "proTitle": "Iskorišćeno je svih 100 generisanja ovog meseca",
+      "proBody": "Limit se obnavlja {date}.",
+      "planAction": "Pogledaj svoj plan"
+    },
+    "errors": {
+      "unauthenticated": "Sesija je istekla. Prijavi se ponovo da nastaviš.",
+      "invalid_input": "Nešto u formi nije ispravno. Proveri i pokušaj ponovo.",
+      "rate_limited": "Malo prebrzo. Sačekaj minut i pokušaj ponovo.",
+      "quota_exhausted": "Iskorišćena su sva generisanja iz tvog plana.",
+      "length_not_allowed": "Ta dužina nije uključena u tvoj plan. Izaberi kraću.",
+      "not_configured": "Generator još nije podešen na ovoj instalaciji.",
+      "server_error": "Nešto je pošlo naopako kod nas. Ništa nije uračunato. Pokušaj ponovo.",
+      "not_found": "Nismo pronašli to generisanje. Pokreni novo.",
+      "already_streamed": "Ovaj tekst je već generisan. Iskoristi Regeneriši za novu verziju.",
+      "type_not_selected": "Taj format nije bio deo ovog generisanja.",
+      "not_started": "Ovaj tekst još nije generisan.",
+      "regeneration_cap_reached": "Iskorišćeno je svih 10 regenerisanja za ovo generisanje. Za još, pokreni novo.",
+      "save_failed": "Nismo uspeli da sačuvamo tekst u biblioteku. Pokušaj ponovo.",
+      "network_error": "Veza je pukla dok je Fanout pisao.",
+      "source_invalid_url": "To ne izgleda kao ispravna veb-adresa.",
+      "source_blocked": "Fanout ne može da pročita tu adresu. Koristi javnu https stranicu.",
+      "source_unreachable": "Nismo uspeli da dođemo do te stranice. Proveri adresu i pokušaj ponovo.",
+      "source_timeout": "Stranica se predugo učitava. Probaj drugu ili nalepi tekst.",
+      "source_too_many_redirects": "Ta adresa preusmerava previše puta. Unesi krajnju adresu stranice.",
+      "source_http_error": "Stranica je vratila grešku. Proveri da li je javna i pokušaj ponovo.",
+      "source_unsupported_type": "Ta adresa nije veb-stranica ni običan tekst. Nalepi tekst umesto toga.",
+      "source_too_large": "Stranica je prevelika za čitanje. Nalepi deo koji ti treba.",
+      "source_empty": "Na toj stranici nismo našli čitljiv tekst. Nalepi tekst umesto toga.",
+      "llm_rate_limited": "AI servis je trenutno zauzet. Sačekaj trenutak pa pokušaj ponovo.",
+      "llm_overloaded": "AI servis je trenutno preopterećen. Sačekaj trenutak pa pokušaj ponovo.",
+      "llm_unavailable": "Nismo uspeli da dođemo do AI servisa. Pokušaj ponovo za koji trenutak.",
+      "llm_refused": "AI je odbio da napiše ovaj tekst. Probaj da preformulišeš temu.",
+      "llm_misconfigured": "AI servis nije ispravno podešen na ovoj instalaciji.",
+      "stream_failed": "Nešto je prekinulo pisanje. Pokušaj ponovo."
     }
   },
   "library": {
