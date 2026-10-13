@@ -1,6 +1,15 @@
 import { describe, expect, it } from "vitest";
 
-import { AUTH_ERROR_CODES, AUTH_ERROR_MESSAGES, isAuthErrorCode, mapAuthError } from "./errors";
+import en from "../../../messages/en.json";
+import sr from "../../../messages/sr.json";
+
+import {
+  AUTH_ERROR_CODES,
+  AUTH_NOTICES,
+  FIELD_ERROR_CODES,
+  isAuthErrorCode,
+  mapAuthError,
+} from "./errors";
 
 describe("mapAuthError", () => {
   it.each([
@@ -33,11 +42,16 @@ describe("mapAuthError", () => {
   });
 });
 
-describe("auth error catalogue", () => {
-  it("has a message for every code", () => {
-    for (const code of AUTH_ERROR_CODES) {
-      expect(AUTH_ERROR_MESSAGES[code].length).toBeGreaterThan(0);
-    }
+describe("auth message catalogue", () => {
+  const sorted = (values: readonly string[]) => [...values].sort();
+
+  it.each([
+    ["en", en],
+    ["sr", sr],
+  ])("%s has exactly one message per error code, field error and notice", (_name, messages) => {
+    expect(sorted(Object.keys(messages.auth.errors))).toEqual(sorted(AUTH_ERROR_CODES));
+    expect(sorted(Object.keys(messages.auth.fieldErrors))).toEqual(sorted(FIELD_ERROR_CODES));
+    expect(sorted(Object.keys(messages.auth.notices))).toEqual(sorted(AUTH_NOTICES));
   });
 
   it("validates codes coming from the query string", () => {

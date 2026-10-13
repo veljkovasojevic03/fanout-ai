@@ -5,11 +5,13 @@ import { updateSession } from "@/lib/supabase/proxy";
 const isProtectedPath = (pathname: string) => pathname === "/app" || pathname.startsWith("/app/");
 
 export async function proxy(request: NextRequest) {
-  const { response, userId } = await updateSession(request);
+  const { response, userId, unavailable } = await updateSession(request);
 
   // First line of defence only. The /app layout re-checks the user on the server,
-  // and the database enforces RLS no matter what reaches it.
-  if (!userId && isProtectedPath(request.nextUrl.pathname)) {
+  // and the database enforces RLS no matter what reaches it. When the Auth server
+  // is unreachable we let the request through: the layout shows "waking up"
+  // rather than bouncing a signed-in user to the login page.
+  if (!userId && !unavailable && isProtectedPath(request.nextUrl.pathname)) {
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = "/login";
     loginUrl.search = "";

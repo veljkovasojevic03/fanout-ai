@@ -1,11 +1,24 @@
 "use client"; // Error boundaries must be Client Components
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import en from "../../messages/en.json";
+import sr from "../../messages/sr.json";
 
 /*
  * Replaces the root layout when it fails, so it cannot rely on globals.css,
- * fonts, or any provider. Styles are inlined with the raw token values.
+ * fonts, or any provider — including the i18n provider. Styles are inlined with
+ * the raw token values, and the language is read straight from the cookie.
  */
+const COPY = {
+  en: { ...en.globalError, tryAgain: en.common.tryAgain, reference: en.error.reference },
+  sr: { ...sr.globalError, tryAgain: sr.common.tryAgain, reference: sr.error.reference },
+};
+
+// Must match LOCALE_COOKIE in src/i18n/config.ts.
+const isSerbian = () =>
+  typeof document !== "undefined" && /(?:^|;\s*)FANOUT_LOCALE=sr(?:;|$)/.test(document.cookie);
+
 const styles = {
   body: {
     margin: 0,
@@ -48,23 +61,37 @@ export default function GlobalError({
   error: Error & { digest?: string };
   retry: () => void;
 }) {
+  const [locale] = useState<"en" | "sr">(() => (isSerbian() ? "sr" : "en"));
+  const copy = COPY[locale];
+
   useEffect(() => {
     console.error(error);
   }, [error]);
 
   return (
-    <html lang="en">
+    <html lang={locale === "sr" ? "sr-Latn" : "en"} suppressHydrationWarning>
       <body style={styles.body}>
-        <title>Something went wrong · Fanout AI</title>
-        <main style={styles.wrap}>
-          <h1 style={styles.title}>Fanout AI hit a snag.</h1>
-          <p style={styles.text}>
-            The app failed to load. Trying again usually fixes it — your saved content is safe.
+        <title>{copy.metaTitle}</title>
+        <main style={styles.wrap} suppressHydrationWarning>
+          <h1 style={styles.title} suppressHydrationWarning>
+            {copy.title}
+          </h1>
+          <p style={styles.text} suppressHydrationWarning>
+            {copy.description}
           </p>
-          <button type="button" style={styles.button} onClick={() => retry()}>
-            Try again
+          <button
+            type="button"
+            style={styles.button}
+            onClick={() => retry()}
+            suppressHydrationWarning
+          >
+            {copy.tryAgain}
           </button>
-          {error.digest ? <p style={styles.ref}>ref: {error.digest}</p> : null}
+          {error.digest ? (
+            <p style={styles.ref} suppressHydrationWarning>
+              {copy.reference.replace("{id}", error.digest)}
+            </p>
+          ) : null}
         </main>
       </body>
     </html>

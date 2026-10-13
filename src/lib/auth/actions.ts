@@ -3,6 +3,7 @@
 import type { Route } from "next";
 import { redirect } from "next/navigation";
 
+import { syncLocaleAfterAuth } from "@/i18n/sync";
 import { log } from "@/lib/log";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -89,6 +90,7 @@ export async function signInAction(
     return unexpected("auth.sign_in_threw", error);
   }
 
+  await syncLocaleAfterAuth();
   redirect(safeNextPath(next) as Route);
 }
 
@@ -126,6 +128,7 @@ export async function signUpAction(
   }
 
   if (!hasSession) return success("check_email_signup");
+  await syncLocaleAfterAuth();
   redirect(destination as Route);
 }
 
@@ -150,6 +153,7 @@ export async function guestAction(
     return unexpected("auth.guest_threw", error);
   }
 
+  await syncLocaleAfterAuth();
   redirect(DEFAULT_AFTER_AUTH as Route);
 }
 

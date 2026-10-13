@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 import { AuthCard } from "@/components/auth/auth-card";
 import { UpdatePasswordForm } from "@/components/auth/auth-forms";
 import { getCurrentUser, isGuest } from "@/lib/auth/session";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 
-export const metadata: Metadata = { title: "Set a password" };
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("auth.updatePassword");
+  return { title: t("metaTitle") };
+}
 
 /*
  * Reached from an emailed link (password recovery, or confirming the email of a
@@ -21,11 +25,10 @@ export default async function UpdatePasswordPage() {
     if (isGuest(user)) redirect("/app/upgrade");
   }
 
+  const t = await getTranslations("auth.updatePassword");
+
   return (
-    <AuthCard
-      title="Set a password"
-      description="Choose a password for your account. You'll use it with your email to log in."
-    >
+    <AuthCard title={t("title")} description={t("description")}>
       <UpdatePasswordForm />
     </AuthCard>
   );

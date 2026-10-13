@@ -47,3 +47,26 @@ One line per non-obvious decision: what was chosen and why. Newest at the bottom
 - **The Supabase client is untyped for now; rows read on the server are parsed with zod** — generated `Database` types need a linked project (`supabase gen types`), which does not exist yet.
 - **Auth screens and `/app` have English strings in code** — same as Phase 0: `next-intl` moves them into `messages/` in Phase 2. All auth errors are already code-based, so only the dictionaries move.
 - **A minimal `/app` frame instead of the app shell** — the sidebar, usage meter and language switcher are Phase 2; this phase only needs a protected area that proves the session, plan and usage are real.
+
+## Phase 2 — App shell, i18n, dashboard
+
+- **Locale comes from a cookie, not the URL** (`next-intl` without i18n routing) — matches the spec ("stored in profile and in a cookie"), keeps every link and auth redirect locale-free, and avoids a `[locale]` segment around the whole app. Trade-off: one URL per page, so no per-language URLs for search engines; revisit in Phase 7 if hreflang matters.
+- **App locale is `en | sr`, Intl locale is `en | sr-Latn`** — plain `sr` makes `Intl` print dates and plurals in Cyrillic. The profile, cookie and file names use `sr`; formatting and `<html lang>` use `sr-Latn`.
+- **First visit follows `Accept-Language`; after that the cookie wins** — a Serbian browser gets Serbian without clicking anything, but an explicit choice is never overridden.
+- **On sign-in the cookie and `profiles.ui_language` are reconciled** — cookie present: it wins and is saved to the profile; no cookie (new device): the profile's language is applied.
+- **Message keys are type-checked** (`AppConfig.Messages = typeof en.json`) — a mistyped or missing key fails `pnpm typecheck`, not at runtime.
+- **`pnpm i18n:check` compares ICU arguments and rich-text tags, not just keys** — a translation that drops `{count}` or `<link>` renders wrong while key parity still passes.
+- **The check script runs on plain Node (type stripping)** — no `tsx`/build step; hence `"type": "module"` and Node >= 22.18.
+- **`global-error.tsx` imports both catalogues and reads the cookie itself** — it replaces the root layout, so the i18n provider does not exist there.
+- **Serbian copy avoids gendered past-tense forms** ("Zdravo ponovo", not "Dobro došao") — the app does not know the user's gender.
+- **`/design` and `/design/shell` stay English** — internal reference pages, not product UI.
+- **Session state has three outcomes: signed in, signed out, unavailable** — a paused database must show "Demo is waking up", never bounce a signed-in user to the login page. The proxy therefore does not redirect when the Auth server is unreachable.
+- **"Waking up" retries with `router.refresh()`** rather than polling `/api/health` — the server re-evaluates the real condition, and the screen does not depend on the service-role key being configured.
+- **The "waking up" copy admits a paused free-tier project needs a manual restart** — Supabase does not auto-resume paused projects; promising "back in a minute" forever would be a lie.
+- **`AppShell` and `DashboardView` are presentational; the layout/page only load data** — keeps data access in one place and lets `/design/shell` render every shell state (free, guest, pro, load error, waking up) with sample data, no session needed.
+- **One `getAccount()` feeds every usage number** (top bar, dashboard, settings) — a single definition of "used this period", matching `consume_generation()`'s UTC month.
+- **Generate / Library / Calendar are labelled "Not built yet" pages, not hidden nav items** — the shell is complete and honest; `/app/generate?preset=…` already validates the preset and shows what will be prefilled.
+- **Preset lengths are clamped to the plan's `max_length`** — a preset can never offer a Free user a Long generation.
+- **Content-type icons are generic glyphs, not brand logos** — no third-party trademarks in the product UI.
+- **Server-rendered times use UTC** — the server does not know the visitor's time zone; relative times ("2 hours ago") are unaffected, and user-local times arrive with the calendar in Phase 6.
+- **Mobile top bar shows the mark only and the dashboard repeats the guest call to action** — the full wordmark and the sidebar do not fit at 375px.

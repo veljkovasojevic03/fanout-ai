@@ -7,7 +7,7 @@ type StatusScreenProps = {
   code: string;
   title: string;
   description: string;
-  /** Optional reference shown to help match server logs (e.g. an error digest). */
+  /** Optional, already-translated reference line (e.g. "ref: 1a2b3c") to match server logs. */
   reference?: string;
   children?: React.ReactNode;
 };
@@ -32,7 +32,7 @@ export function StatusScreen({ code, title, description, reference, children }: 
           {children ? (
             <div className="mt-1 flex flex-wrap justify-center gap-2">{children}</div>
           ) : null}
-          {reference ? <p className="counter text-xs text-subtle">ref: {reference}</p> : null}
+          {reference ? <p className="counter text-xs text-subtle">{reference}</p> : null}
         </div>
       </main>
     </div>

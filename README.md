@@ -17,7 +17,12 @@ an X thread. UI in English and Serbian.
   quota function and a rate limiter — with a database test suite that tries to break them
 - Auth: email + password, password reset, Google OAuth, guest sessions (anonymous sign-in behind
   Cloudflare Turnstile) and guest → account upgrade that keeps saved content
-- A protected `/app` area and `/api/health` (runs a real database query)
+- `/api/health` (runs a real database query)
+- The app shell: sidebar, top bar with usage meter and plan badge, mobile bottom tabs; a dashboard
+  with real usage data and quick-start presets; working profile settings
+- Complete English and Serbian (Latin) UI — type-checked message keys and `pnpm i18n:check`
+- A "Demo is waking up" screen for when the free-tier database is unreachable
+- `/design/shell` — the shell and dashboard rendered with sample data, in every state
 
 ## Run locally
 
@@ -46,6 +51,7 @@ pnpm exec supabase db push      # applies supabase/migrations
 pnpm lint
 pnpm typecheck
 pnpm test
+pnpm i18n:check       # en and sr have the same keys, ICU arguments and rich-text tags
 pnpm test:db          # RLS, grants and quota — in-process Postgres, no Docker needed
 pnpm test:db:remote   # the same suite against SUPABASE_DB_URL (every test is rolled back)
 pnpm build

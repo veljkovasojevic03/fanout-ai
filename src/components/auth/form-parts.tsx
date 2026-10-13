@@ -2,19 +2,25 @@
 
 import { Turnstile } from "@marsidev/react-turnstile";
 import { CircleCheck, TriangleAlert } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
 
 import { Button, type ButtonProps } from "@/components/ui/button";
-import { AUTH_ERROR_MESSAGES, AUTH_NOTICES, type AuthErrorCode } from "@/lib/auth/errors";
+import { toAppLocale } from "@/i18n/config";
+import type { AuthErrorCode } from "@/lib/auth/errors";
 import type { AuthFormState } from "@/lib/auth/state";
 import { cn } from "@/lib/utils";
 
 /** Submit button that shows a spinner while its form's action is running. */
-export function SubmitButton({ children, ...props }: Omit<ButtonProps, "type" | "loading">) {
+export function SubmitButton({
+  children,
+  disabled,
+  ...props
+}: Omit<ButtonProps, "type" | "loading">) {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" loading={pending} {...props}>
+    <Button type="submit" loading={pending} disabled={disabled} {...props}>
       {children}
     </Button>
   );
@@ -50,13 +56,15 @@ export function FormStateAlert({
   state: AuthFormState;
   initialError?: AuthErrorCode;
 }) {
+  const t = useTranslations("auth");
+
   if (state.status === "success") {
-    return <FormAlert tone="success">{AUTH_NOTICES[state.notice]}</FormAlert>;
+    return <FormAlert tone="success">{t(`notices.${state.notice}`)}</FormAlert>;
   }
   const code = state.status === "error" ? state.code : initialError;
   // Field-level problems are shown next to the fields themselves.
   if (!code || (state.status === "error" && code === "invalid_input" && state.fields)) return null;
-  return <FormAlert tone="error">{AUTH_ERROR_MESSAGES[code]}</FormAlert>;
+  return <FormAlert tone="error">{t(`errors.${code}`)}</FormAlert>;
 }
 
 /**
@@ -69,6 +77,7 @@ export function FormStateAlert({
  */
 export function CaptchaField() {
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const language = toAppLocale(useLocale());
   const [token, setToken] = useState("");
 
   if (!siteKey) return null;
@@ -78,7 +87,7 @@ export function CaptchaField() {
       <input type="hidden" name="captchaToken" value={token} />
       <Turnstile
         siteKey={siteKey}
-        options={{ theme: "dark", size: "flexible", responseField: false }}
+        options={{ theme: "dark", size: "flexible", responseField: false, language }}
         onSuccess={setToken}
         onExpire={() => setToken("")}
         onError={() => setToken("")}
@@ -98,11 +107,12 @@ export function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-export function OrDivider({ children }: { children: React.ReactNode }) {
+export function OrDivider() {
+  const t = useTranslations("auth");
   return (
     <div className="flex items-center gap-3" role="separator">
       <span className="h-px flex-1 bg-border" />
-      <span className="font-mono text-[11px] tracking-wide text-subtle uppercase">{children}</span>
+      <span className="font-mono text-[11px] tracking-wide text-subtle uppercase">{t("or")}</span>
       <span className="h-px flex-1 bg-border" />
     </div>
   );

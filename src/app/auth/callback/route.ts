@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 
+import { syncLocaleAfterAuth } from "@/i18n/sync";
 import { mapAuthError, type AuthErrorCode } from "@/lib/auth/errors";
 import { safeNextPath } from "@/lib/auth/redirect";
 import { log } from "@/lib/log";
@@ -57,6 +58,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         log.warn("auth.callback_exchange_failed", { supabase_code: error.code });
         return loginError(request, "link_expired");
       }
+      await syncLocaleAfterAuth();
       return redirectTo(request, next);
     }
 
@@ -69,6 +71,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         log.warn("auth.callback_verify_failed", { supabase_code: error.code });
         return loginError(request, "link_expired");
       }
+      await syncLocaleAfterAuth();
       return redirectTo(request, next);
     }
   } catch (error) {

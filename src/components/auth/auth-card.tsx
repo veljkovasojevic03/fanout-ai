@@ -1,4 +1,7 @@
 import { Settings } from "lucide-react";
+import type { Route } from "next";
+import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 import { EmptyState } from "@/components/ui/empty-state";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
@@ -12,7 +15,7 @@ type AuthCardProps = {
 };
 
 /** The card every auth screen is built from. */
-export function AuthCard({ title, description, children, footer }: AuthCardProps) {
+export async function AuthCard({ title, description, children, footer }: AuthCardProps) {
   return (
     <div className="flex w-full max-w-sm flex-col gap-6">
       <div className="flex flex-col gap-6 rounded-xl border border-border bg-surface p-6 sm:p-7">
@@ -32,12 +35,13 @@ export function AuthCard({ title, description, children, footer }: AuthCardProps
 }
 
 /** Shown instead of a form when the Supabase env vars are missing. */
-function NotConfigured() {
+async function NotConfigured() {
+  const t = await getTranslations("auth.notConfigured");
   return (
     <EmptyState
       icon={<Settings />}
-      title="Sign-in isn't set up yet"
-      description="This deployment has no Supabase project connected. Add the Supabase keys to the environment (see .env.example) and restart."
+      title={t("title")}
+      description={t("description")}
       className="px-4 py-8"
     />
   );
@@ -45,3 +49,13 @@ function NotConfigured() {
 
 export const authLinkClass =
   "rounded-sm font-medium text-foreground underline decoration-border-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent";
+
+/** Builds the renderer for a `<link>…</link>` tag in a translated message. */
+export function authLink(href: Route) {
+  const AuthLink = (chunks: React.ReactNode) => (
+    <Link href={href} className={authLinkClass}>
+      {chunks}
+    </Link>
+  );
+  return AuthLink;
+}

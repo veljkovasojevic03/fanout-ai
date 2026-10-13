@@ -13,6 +13,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Field } from "@/components/ui/field";
 import { Input, Textarea } from "@/components/ui/input";
 import {
@@ -241,5 +249,25 @@ export function ToastDemo() {
         Promise
       </Button>
     </div>
+  );
+}
+
+export function DropdownDemo() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="secondary">Open menu</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
+        <DropdownMenuLabel>ada@example.com</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={() => toast("Settings selected")}>Settings</DropdownMenuItem>
+        <DropdownMenuItem disabled>Billing (disabled)</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem tone="danger" onSelect={() => toast("Logged out")}>
+          Log out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

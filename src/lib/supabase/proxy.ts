@@ -7,6 +7,12 @@ type SessionResult = {
   /** Pass this response on (or copy its cookies) so refreshed tokens reach the browser. */
   response: NextResponse;
   userId: string | null;
+  /**
+   * The Auth server could not be reached, so "no user" does not mean "signed
+   * out". Callers must not redirect to login on this; the app shows the
+   * "Demo is waking up" screen instead.
+   */
+  unavailable: boolean;
 };
 
 /**
@@ -18,7 +24,7 @@ export async function updateSession(request: NextRequest): Promise<SessionResult
   let response = NextResponse.next({ request });
 
   const env = getSupabasePublicEnv();
-  if (!env) return { response, userId: null };
+  if (!env) return { response, userId: null, unavailable: false };
 
   const supabase = createServerClient(env.url, env.anonKey, {
     cookies: {
@@ -38,11 +44,13 @@ export async function updateSession(request: NextRequest): Promise<SessionResult
   });
 
   try {
-    const { data } = await supabase.auth.getClaims();
+    const { data, error } = await supabase.auth.getClaims();
     const sub = data?.claims.sub;
-    return { response, userId: typeof sub === "string" ? sub : null };
+    if (typeof sub === "string") return { response, userId: sub, unavailable: false };
+    const outage = error?.name === "AuthRetryableFetchError" || (error?.status ?? 0) >= 500;
+    return { response, userId: null, unavailable: outage };
   } catch {
-    // Auth server unreachable (e.g. the free-tier project is paused): treat as signed out.
-    return { response, userId: null };
+    // Auth server unreachable (e.g. the free-tier project is paused).
+    return { response, userId: null, unavailable: true };
   }
 }

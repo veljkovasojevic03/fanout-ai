@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, JetBrains_Mono } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { Toaster } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
@@ -20,28 +22,31 @@ const jetbrainsMono = JetBrains_Mono({
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
-export const metadata: Metadata = {
-  metadataBase: appUrl ? new URL(appUrl) : undefined,
-  title: {
-    default: "Fanout AI — One idea. Five formats.",
-    template: "%s · Fanout AI",
-  },
-  description:
-    "Turn one idea into a blog post, LinkedIn post, Instagram caption, email newsletter and X thread — streamed at once.",
-  applicationName: "Fanout AI",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("meta");
+  return {
+    metadataBase: appUrl ? new URL(appUrl) : undefined,
+    title: { default: t("title"), template: "%s · Fanout AI" },
+    description: t("description"),
+    applicationName: "Fanout AI",
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#0a0a0b",
   colorScheme: "dark",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const [locale, t] = await Promise.all([getLocale(), getTranslations("common")]);
+
   return (
-    <html lang="en" className={cn(geistSans.variable, jetbrainsMono.variable)}>
+    <html lang={locale} className={cn(geistSans.variable, jetbrainsMono.variable)}>
       <body className="min-h-dvh">
-        {children}
-        <Toaster />
+        <NextIntlClientProvider>
+          {children}
+          <Toaster containerAriaLabel={t("notifications")} />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

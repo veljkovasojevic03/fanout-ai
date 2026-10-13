@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
-import { AuthCard, authLinkClass } from "@/components/auth/auth-card";
+import { AuthCard, authLink, authLinkClass } from "@/components/auth/auth-card";
 import { GoogleButton, LoginForm } from "@/components/auth/auth-forms";
 import { OrDivider } from "@/components/auth/form-parts";
 import { isAuthErrorCode } from "@/lib/auth/errors";
 import { getCurrentUser, isGuest } from "@/lib/auth/session";
 
-export const metadata: Metadata = { title: "Log in" };
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("auth.login");
+  return { title: t("metaTitle") };
+}
 
 export default async function LoginPage({ searchParams }: PageProps<"/login">) {
   const params = await searchParams;
@@ -19,33 +23,25 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
   const user = await getCurrentUser();
   if (user && !isGuest(user)) redirect("/app");
 
+  const t = await getTranslations("auth.login");
+
   return (
     <AuthCard
-      title="Welcome back"
-      description="Log in to your Fanout workspace."
+      title={t("title")}
+      description={t("description")}
       footer={
         <>
-          <p>
-            New here?{" "}
-            <Link href="/signup" className={authLinkClass}>
-              Create an account
-            </Link>
-          </p>
-          <p>
-            Just looking?{" "}
-            <Link href="/guest" className={authLinkClass}>
-              Try as guest
-            </Link>
-          </p>
+          <p>{t.rich("newHere", { link: authLink("/signup") })}</p>
+          <p>{t.rich("justLooking", { link: authLink("/guest") })}</p>
         </>
       }
     >
       <div className="flex flex-col gap-5">
-        <GoogleButton next={next} label="Continue with Google" />
-        <OrDivider>or</OrDivider>
+        <GoogleButton next={next} mode="continue" />
+        <OrDivider />
         <LoginForm next={next} initialError={initialError} />
         <Link href="/reset-password" className={`${authLinkClass} self-center text-sm`}>
-          Forgot your password?
+          {t("forgot")}
         </Link>
       </div>
     </AuthCard>

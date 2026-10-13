@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useActionState, useState } from "react";
 
 import { Field } from "@/components/ui/field";
@@ -14,15 +15,19 @@ import {
   upgradeWithEmailAction,
   upgradeWithGoogleAction,
 } from "@/lib/auth/actions";
-import { FIELD_ERROR_MESSAGES, type AuthErrorCode } from "@/lib/auth/errors";
+import type { AuthErrorCode } from "@/lib/auth/errors";
 import { IDLE_STATE, type AuthFormState } from "@/lib/auth/state";
 
 import { CaptchaField, FormStateAlert, GoogleIcon, SubmitButton } from "./form-parts";
 
-const fieldError = (state: AuthFormState, name: string): string | undefined => {
-  const code = state.status === "error" ? state.fields?.[name] : undefined;
-  return code ? FIELD_ERROR_MESSAGES[code] : undefined;
-};
+/** Translated message for a field's validation error, if it has one. */
+function useFieldError(state: AuthFormState) {
+  const t = useTranslations("auth.fieldErrors");
+  return (name: string): string | undefined => {
+    const code = state.status === "error" ? state.fields?.[name] : undefined;
+    return code ? t(code) : undefined;
+  };
+}
 
 /** Changes after every submit, remounting the single-use CAPTCHA widget. */
 const attemptKey = (state: AuthFormState) => (state.status === "idle" ? 0 : state.at);
@@ -32,16 +37,17 @@ const attemptKey = (state: AuthFormState) => (state.status === "idle" ? 0 : stat
  * is kept in state to survive a failed attempt. Passwords are meant to clear.
  */
 function EmailField({
-  state,
+  error,
   value,
   onChange,
 }: {
-  state: AuthFormState;
+  error: string | undefined;
   value: string;
   onChange: (value: string) => void;
 }) {
+  const t = useTranslations("auth.fields");
   return (
-    <Field label="Email" error={fieldError(state, "email")}>
+    <Field label={t("email")} error={error}>
       <Input
         name="email"
         type="email"
@@ -52,33 +58,37 @@ function EmailField({
         required
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="you@example.com"
+        placeholder={t("emailPlaceholder")}
       />
     </Field>
   );
 }
 
 export function LoginForm({ next, initialError }: { next?: string; initialError?: AuthErrorCode }) {
+  const t = useTranslations("auth");
   const [state, action] = useActionState(signInAction, IDLE_STATE);
   const [email, setEmail] = useState("");
+  const fieldError = useFieldError(state);
 
   return (
     <form action={action} className="flex flex-col gap-4" noValidate>
       <FormStateAlert state={state} initialError={initialError} />
       {next ? <input type="hidden" name="next" value={next} /> : null}
-      <EmailField state={state} value={email} onChange={setEmail} />
-      <Field label="Password" error={fieldError(state, "password")}>
+      <EmailField error={fieldError("email")} value={email} onChange={setEmail} />
+      <Field label={t("fields.password")} error={fieldError("password")}>
         <Input name="password" type="password" autoComplete="current-password" required />
       </Field>
       <CaptchaField key={attemptKey(state)} />
-      <SubmitButton size="lg">Log in</SubmitButton>
+      <SubmitButton size="lg">{t("login.submit")}</SubmitButton>
     </form>
   );
 }
 
 export function SignupForm({ next }: { next?: string }) {
+  const t = useTranslations("auth");
   const [state, action] = useActionState(signUpAction, IDLE_STATE);
   const [email, setEmail] = useState("");
+  const fieldError = useFieldError(state);
 
   if (state.status === "success") return <FormStateAlert state={state} />;
 
@@ -86,66 +96,76 @@ export function SignupForm({ next }: { next?: string }) {
     <form action={action} className="flex flex-col gap-4" noValidate>
       <FormStateAlert state={state} />
       {next ? <input type="hidden" name="next" value={next} /> : null}
-      <EmailField state={state} value={email} onChange={setEmail} />
-      <Field label="Password" hint="At least 8 characters." error={fieldError(state, "password")}>
+      <EmailField error={fieldError("email")} value={email} onChange={setEmail} />
+      <Field
+        label={t("fields.password")}
+        hint={t("fields.passwordHint")}
+        error={fieldError("password")}
+      >
         <Input name="password" type="password" autoComplete="new-password" required minLength={8} />
       </Field>
       <CaptchaField key={attemptKey(state)} />
-      <SubmitButton size="lg">Create account</SubmitButton>
+      <SubmitButton size="lg">{t("signup.submit")}</SubmitButton>
     </form>
   );
 }
 
-export function GoogleButton({ next, label }: { next?: string; label: string }) {
+export function GoogleButton({ next, mode }: { next?: string; mode: "continue" | "signUp" }) {
+  const t = useTranslations("auth.google");
   return (
     <form action={googleSignInAction}>
       {next ? <input type="hidden" name="next" value={next} /> : null}
       <SubmitButton variant="secondary" size="lg" className="w-full">
         <GoogleIcon className="size-4" />
-        {label}
+        {t(mode)}
       </SubmitButton>
     </form>
   );
 }
 
 export function GuestForm() {
+  const t = useTranslations("auth.guest");
   const [state, action] = useActionState(guestAction, IDLE_STATE);
 
   return (
     <form action={action} className="flex flex-col gap-4">
       <FormStateAlert state={state} />
       <CaptchaField key={attemptKey(state)} />
-      <SubmitButton size="lg">Continue as guest</SubmitButton>
+      <SubmitButton size="lg">{t("submit")}</SubmitButton>
     </form>
   );
 }
 
 export function ResetRequestForm() {
+  const t = useTranslations("auth.reset");
   const [state, action] = useActionState(requestPasswordResetAction, IDLE_STATE);
   const [email, setEmail] = useState("");
+  const fieldError = useFieldError(state);
 
   if (state.status === "success") return <FormStateAlert state={state} />;
 
   return (
     <form action={action} className="flex flex-col gap-4" noValidate>
       <FormStateAlert state={state} />
-      <EmailField state={state} value={email} onChange={setEmail} />
+      <EmailField error={fieldError("email")} value={email} onChange={setEmail} />
       <CaptchaField key={attemptKey(state)} />
-      <SubmitButton size="lg">Send reset link</SubmitButton>
+      <SubmitButton size="lg">{t("submit")}</SubmitButton>
     </form>
   );
 }
 
 export function UpdatePasswordForm() {
+  const t = useTranslations("auth");
   const [state, action] = useActionState(updatePasswordAction, IDLE_STATE);
+  const fieldError = useFieldError(state);
 
   return (
     <form action={action} className="flex flex-col gap-4" noValidate>
       <FormStateAlert state={state} />
       <Field
-        label="New password"
-        hint="At least 8 characters."
-        error={fieldError(state, "password")}
+        label={t("fields.newPassword")}
+        hint={t("fields.passwordHint")}
+        error={fieldError("password")}
       >
         <Input
           name="password"
@@ -156,32 +176,35 @@ export function UpdatePasswordForm() {
           autoFocus
         />
       </Field>
-      <SubmitButton size="lg">Save password</SubmitButton>
+      <SubmitButton size="lg">{t("updatePassword.submit")}</SubmitButton>
     </form>
   );
 }
 
 export function UpgradeEmailForm() {
+  const t = useTranslations("auth.upgrade");
   const [state, action] = useActionState(upgradeWithEmailAction, IDLE_STATE);
   const [email, setEmail] = useState("");
+  const fieldError = useFieldError(state);
 
   if (state.status === "success") return <FormStateAlert state={state} />;
 
   return (
     <form action={action} className="flex flex-col gap-4" noValidate>
       <FormStateAlert state={state} />
-      <EmailField state={state} value={email} onChange={setEmail} />
-      <SubmitButton size="lg">Continue with email</SubmitButton>
+      <EmailField error={fieldError("email")} value={email} onChange={setEmail} />
+      <SubmitButton size="lg">{t("emailSubmit")}</SubmitButton>
     </form>
   );
 }
 
 export function UpgradeGoogleButton() {
+  const t = useTranslations("auth.google");
   return (
     <form action={upgradeWithGoogleAction}>
       <SubmitButton variant="secondary" size="lg" className="w-full">
         <GoogleIcon className="size-4" />
-        Continue with Google
+        {t("continue")}
       </SubmitButton>
     </form>
   );

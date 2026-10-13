@@ -1,0 +1,346 @@
+{
+  "meta": {
+    "title": "Fanout AI — Jedna ideja. Pet formata.",
+    "description": "Pretvori jednu ideju u blog post, LinkedIn objavu, Instagram opis, email bilten i X nit — sve odjednom."
+  },
+  "common": {
+    "taglineLead": "Jedna ideja.",
+    "taglineAccent": "Pet formata.",
+    "tryAgain": "Pokušaj ponovo",
+    "backHome": "Nazad na početnu",
+    "close": "Zatvori",
+    "notifications": "Obaveštenja",
+    "skipToContent": "Preskoči na sadržaj",
+    "notBuiltYet": "Još nije napravljeno",
+    "plans": {
+      "guest": "Gost",
+      "free": "Besplatan",
+      "pro": "Pro"
+    },
+    "formats": {
+      "blog": "Blog post",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "email": "Email",
+      "x_thread": "X nit"
+    },
+    "tones": {
+      "professional": "Profesionalan",
+      "casual": "Opušten",
+      "funny": "Duhovit",
+      "inspirational": "Inspirativan"
+    },
+    "lengths": {
+      "short": "Kratko",
+      "medium": "Srednje",
+      "long": "Dugo"
+    },
+    "languages": {
+      "en": "Engleski",
+      "sr": "Srpski"
+    }
+  },
+  "home": {
+    "status": "U izradi",
+    "lead": "Daj Fanoutu jednu ideju i dobij pet tekstova spremnih za objavu, ispisanih jedan pored drugog.",
+    "formatsLabel": "Izlazni formati",
+    "note": "Nalozi i gostujuće sesije rade već danas. Generator, biblioteka i objavljivanje se grade fazu po fazu.",
+    "tryGuest": "Probaj kao gost",
+    "signUp": "Registruj se",
+    "logIn": "Prijavi se",
+    "openApp": "Otvori radni prostor"
+  },
+  "notFound": {
+    "metaTitle": "Stranica nije pronađena",
+    "title": "Ova stranica se rasula u prazno.",
+    "description": "Link je možda neispravan ili je stranica premeštena. Vrati se i pokušaj ponovo."
+  },
+  "error": {
+    "code": "Greška",
+    "title": "Nešto je pošlo naopako.",
+    "description": "Neočekivana greška je prekinula ovu stranicu. Novi pokušaj obično rešava stvar.",
+    "reference": "ref: {id}"
+  },
+  "globalError": {
+    "metaTitle": "Nešto je pošlo naopako · Fanout AI",
+    "title": "Fanout AI se zaglavio.",
+    "description": "Aplikacija se nije učitala. Novi pokušaj obično rešava stvar — tvoj sačuvani sadržaj je bezbedan."
+  },
+  "wakingUp": {
+    "title": "Demo se budi",
+    "description": "Ovaj demo radi na besplatnoj bazi koja zaspi kad ga niko ne posećuje. Sačekaj malo — obično se vrati za manje od minut.",
+    "checking": "Proveravam…",
+    "nextCheck": "Nova provera za {seconds, plural, one {# sekundu} few {# sekunde} other {# sekundi}}",
+    "checkNow": "Proveri odmah",
+    "stillDown": "I dalje spava. Besplatna baza se pauzira posle nedelju dana bez posetilaca i tada vlasnik mora ručno da je pokrene. Navrati malo kasnije."
+  },
+  "auth": {
+    "or": "ili",
+    "fields": {
+      "email": "Email",
+      "emailPlaceholder": "ti@primer.rs",
+      "password": "Lozinka",
+      "newPassword": "Nova lozinka",
+      "passwordHint": "Najmanje 8 znakova."
+    },
+    "google": {
+      "continue": "Nastavi uz Google",
+      "signUp": "Registruj se uz Google"
+    },
+    "login": {
+      "metaTitle": "Prijava",
+      "title": "Zdravo ponovo",
+      "description": "Prijavi se u svoj Fanout radni prostor.",
+      "submit": "Prijavi se",
+      "forgot": "Zaboravljena lozinka?",
+      "newHere": "Prvi put ovde? <link>Napravi nalog</link>",
+      "justLooking": "Samo razgledaš? <link>Probaj kao gost</link>"
+    },
+    "signup": {
+      "metaTitle": "Registracija",
+      "title": "Napravi nalog",
+      "description": "Besplatan plan: 5 generisanja mesečno, po pet formata. Bez kartice.",
+      "submit": "Napravi nalog",
+      "haveAccount": "Već imaš nalog? <link>Prijavi se</link>",
+      "justLooking": "Samo razgledaš? <link>Probaj kao gost</link>"
+    },
+    "guest": {
+      "metaTitle": "Probaj kao gost",
+      "title": "Probaj Fanout kao gost",
+      "description": "Bez emaila i lozinke. Gostujuću sesiju kasnije možeš pretvoriti u pravi nalog i zadržati sve što napraviš.",
+      "included1": "3 generisanja, po pet formata",
+      "included2": "Čuvanje tekstova u biblioteci",
+      "included3": "Uređivanje i izvoz",
+      "notIncludedPrefix": "Nije uključeno:",
+      "notIncluded1": "Objavljivanje i zakazivanje",
+      "notIncluded2": "Prelazak na Pro",
+      "submit": "Nastavi kao gost",
+      "footer": "Ipak želiš nalog? <signup>Registruj se besplatno</signup> ili <login>se prijavi</login>"
+    },
+    "reset": {
+      "metaTitle": "Resetovanje lozinke",
+      "title": "Resetuj lozinku",
+      "description": "Unesi email svog naloga i poslaćemo ti link za izbor nove lozinke.",
+      "submit": "Pošalji link",
+      "footer": "Ipak se sećaš lozinke? <link>Nazad na prijavu</link>"
+    },
+    "updatePassword": {
+      "metaTitle": "Postavi lozinku",
+      "title": "Postavi lozinku",
+      "description": "Izaberi lozinku za svoj nalog. Koristićeš je uz email za prijavu.",
+      "submit": "Sačuvaj lozinku"
+    },
+    "upgrade": {
+      "metaTitle": "Napravi nalog",
+      "title": "Napravi nalog",
+      "description": "Sve što napraviš kao gost ostaje u tvojoj biblioteci. Prelaziš na besplatan plan: 5 generisanja mesečno, uz objavljivanje.",
+      "emailSubmit": "Nastavi uz email",
+      "footer": "Već imaš nalog? <link>Prijavi se</link> — ali sadržaj iz gostujuće sesije se neće preneti."
+    },
+    "notConfigured": {
+      "title": "Prijava još nije podešena",
+      "description": "Ova instalacija nema povezan Supabase projekat. Dodaj Supabase ključeve u okruženje (pogledaj .env.example) i pokreni ponovo."
+    },
+    "errors": {
+      "invalid_input": "Proveri označena polja i pokušaj ponovo.",
+      "invalid_credentials": "Email i lozinka se ne poklapaju. Pokušaj ponovo ili resetuj lozinku.",
+      "email_not_confirmed": "Prvo potvrdi email — u sandučetu te čeka link koji smo poslali.",
+      "email_taken": "Nalog sa ovim emailom već postoji. Prijavi se umesto toga.",
+      "weak_password": "Izaberi jaču lozinku: najmanje 8 znakova i da nije neka uobičajena.",
+      "same_password": "Nova lozinka mora da se razlikuje od trenutne.",
+      "captcha_required": "Bezbednosna provera još nije završena. Sačekaj trenutak i pokušaj ponovo.",
+      "captcha_failed": "Bezbednosna provera nije uspela. Osveži stranicu i pokušaj ponovo.",
+      "rate_limited": "Previše pokušaja. Sačekaj nekoliko minuta pre sledećeg.",
+      "guest_disabled": "Gostujući režim trenutno nije dostupan. Napravi besplatan nalog.",
+      "provider_disabled": "Ovaj način prijave trenutno nije dostupan.",
+      "linking_disabled": "Povezivanje Google naloga trenutno nije dostupno. Iskoristi email.",
+      "identity_taken": "Taj Google nalog već pripada drugom Fanout nalogu. Prijavi se njime.",
+      "link_expired": "Ovaj link je istekao ili je već iskorišćen. Zatraži novi.",
+      "session_missing": "Sesija je istekla. Prijavi se ponovo da nastaviš.",
+      "not_configured": "Prijava još nije podešena na ovoj instalaciji.",
+      "unavailable": "Nismo uspeli da dođemo do servera. Proveri vezu i pokušaj ponovo.",
+      "unknown": "Nešto je pošlo naopako. Pokušaj ponovo."
+    },
+    "fieldErrors": {
+      "email_invalid": "Unesi ispravnu email adresu.",
+      "password_too_short": "Unesi najmanje 8 znakova.",
+      "password_too_long": "Unesi najviše 72 znaka."
+    },
+    "notices": {
+      "check_email_signup": "Proveri sanduče — poslali smo ti link za potvrdu emaila.",
+      "check_email_reset": "Ako nalog sa tim emailom postoji, link za resetovanje je na putu. Može potrajati minut.",
+      "check_email_upgrade": "Proveri sanduče — potvrdi email da završiš pravljenje naloga. Tvoj sadržaj ostaje ovde."
+    }
+  },
+  "shell": {
+    "navLabel": "Glavna navigacija",
+    "nav": {
+      "dashboard": "Pregled",
+      "generate": "Generiši",
+      "library": "Biblioteka",
+      "calendar": "Kalendar",
+      "settings": "Podešavanja"
+    },
+    "usage": {
+      "label": "Generisanja",
+      "meter": "Iskorišćeno {used} od {limit} generisanja",
+      "periodMonth": "ovog meseca",
+      "periodLifetime": "gostujući limit",
+      "left": "{count, plural, one {još #} few {još #} other {još #}}"
+    },
+    "language": {
+      "label": "Jezik",
+      "switchTo": "Promeni jezik na {language}"
+    },
+    "userMenu": {
+      "open": "Meni naloga",
+      "guest": "Gostujuća sesija",
+      "settings": "Podešavanja",
+      "upgrade": "Napravi besplatan nalog",
+      "logOut": "Odjavi se",
+      "endSession": "Završi gostujuću sesiju"
+    },
+    "guestCta": {
+      "title": "Sačuvaj ono što napraviš",
+      "body": "Gostujuća sesija živi samo u ovom pregledaču. Napravi besplatan nalog da zadržiš sadržaj.",
+      "action": "Napravi besplatan nalog"
+    },
+    "loadError": {
+      "title": "Nismo uspeli da učitamo tvoj radni prostor",
+      "description": "Podaci naloga se nisu učitali. Tvoj sadržaj je bezbedan — pokušaj ponovo za koji trenutak."
+    }
+  },
+  "dashboard": {
+    "metaTitle": "Pregled",
+    "greeting": "Zdravo, {name}",
+    "greetingPlain": "Zdravo ponovo",
+    "greetingGuest": "Zdravo, goste",
+    "subtitle": "Jedna ideja uđe, pet formata izađe. Evo gde stvari stoje.",
+    "stats": {
+      "generations": "Generisanja",
+      "generationsMonth": "Ovog meseca",
+      "generationsLifetime": "Gostujući limit — ne obnavlja se",
+      "remaining": "{count, plural, one {još #} few {još #} other {još #}}",
+      "resets": "Obnavlja se {date}",
+      "words": "Generisane reči",
+      "wordsAllTime": "{count, plural, one {# reč} few {# reči} other {# reči}} ukupno",
+      "saved": "Sačuvani tekstovi",
+      "savedHint": "U tvojoj biblioteci"
+    },
+    "presets": {
+      "title": "Brzi početak",
+      "description": "Izaberi šablon da popuniš generator. Sve možeš da promeniš pre generisanja.",
+      "use": "Iskoristi šablon",
+      "items": {
+        "product_launch": {
+          "title": "Lansiranje proizvoda",
+          "description": "Najavi nešto novo uz jasnu korist i poziv na akciju.",
+          "topic": "Lansiramo novi proizvod — evo šta radi i kome je namenjen"
+        },
+        "weekly_newsletter": {
+          "title": "Nedeljni bilten",
+          "description": "Prijateljski pregled za ljude koji prate tvoj rad.",
+          "topic": "Novosti ove nedelje: šta smo objavili, šta smo naučili i šta sledi"
+        },
+        "thought_leadership": {
+          "title": "Stručno mišljenje",
+          "description": "Podeli jasan stav iz sopstvenog iskustva.",
+          "topic": "Jedno nepopularno mišljenje iz mog posla i iskustvo koje stoji iza njega"
+        },
+        "event_announcement": {
+          "title": "Najava događaja",
+          "description": "Pozovi ljude na događaj i daj im razlog da dođu.",
+          "topic": "Pridruži nam se na predstojećem događaju — šta te čeka i kako da se prijaviš"
+        }
+      }
+    },
+    "recent": {
+      "title": "Nedavni sadržaj",
+      "openLibrary": "Otvori biblioteku",
+      "words": "{count, plural, one {# reč} few {# reči} other {# reči}}",
+      "updated": "Izmenjeno {time}",
+      "emptyTitle": "Još ništa nije sačuvano",
+      "emptyDescription": "Tekstovi koje sačuvaš iz generatora pojavljuju se ovde.",
+      "emptyAction": "Generiši nešto",
+      "errorTitle": "Nismo uspeli da učitamo nedavni sadržaj",
+      "errorDescription": "Ostatak stranice je u redu. Osveži da pokušaš ponovo."
+    }
+  },
+  "generate": {
+    "metaTitle": "Generiši",
+    "title": "Generiši",
+    "description": "Generator stiže u sledećoj fazi izrade. Šabloni ga već popunjavaju — ovako će izgledati početne vrednosti.",
+    "presetLoaded": "Šablon učitan",
+    "noPresetTitle": "Nijedan šablon nije izabran",
+    "noPresetDescription": "Izaberi šablon za brzi početak na pregledu da vidiš kako popunjava generator.",
+    "backToDashboard": "Nazad na pregled",
+    "fields": {
+      "topic": "Tema",
+      "tone": "Ton",
+      "length": "Dužina",
+      "language": "Jezik sadržaja",
+      "formats": "Formati"
+    }
+  },
+  "library": {
+    "metaTitle": "Biblioteka",
+    "title": "Biblioteka",
+    "description": "Pretraži, označi, uredi i izvezi sve što sačuvaš.",
+    "emptyTitle": "Biblioteka još nije napravljena",
+    "emptyDescription": "Sačuvani tekstovi, pretraga, oznake i izvoz stižu u jednoj od narednih faza izrade. U međuvremenu se ništa ne gubi: sadržaj se već čuva po nalogu."
+  },
+  "calendar": {
+    "metaTitle": "Kalendar",
+    "title": "Kalendar",
+    "description": "Zakaži tekstove i vidi šta kada izlazi.",
+    "emptyTitle": "Kalendar još nije napravljen",
+    "emptyDescription": "Zakazivanje i objavljivanje na email i Discord stižu u jednoj od narednih faza izrade."
+  },
+  "settings": {
+    "metaTitle": "Podešavanja",
+    "title": "Podešavanja",
+    "description": "Tvoj profil, podrazumevane vrednosti i potrošnja.",
+    "profile": {
+      "title": "Profil",
+      "description": "Ove vrednosti unapred popunjavaju generator. I dalje ih možeš promeniti za svako generisanje.",
+      "email": "Email",
+      "guestEmail": "Gostujuća sesija — još nema emaila",
+      "displayName": "Ime za prikaz",
+      "displayNameHint": "Prikazuje se u tvom radnom prostoru. Najviše 80 znakova.",
+      "displayNamePlaceholder": "Tvoje ime",
+      "uiLanguage": "Jezik interfejsa",
+      "uiLanguageHint": "Jezik dugmadi, menija i poruka.",
+      "contentLanguage": "Podrazumevani jezik sadržaja",
+      "contentLanguageHint": "Jezik na kom Fanout piše. Ne zavisi od jezika interfejsa.",
+      "tone": "Podrazumevani ton",
+      "submit": "Sačuvaj izmene",
+      "saved": "Podešavanja su sačuvana",
+      "errors": {
+        "invalid_input": "Proveri označena polja i pokušaj ponovo.",
+        "name_too_long": "Unesi najviše 80 znakova.",
+        "session_missing": "Sesija je istekla. Prijavi se ponovo da nastaviš.",
+        "save_failed": "Nismo uspeli da sačuvamo podešavanja. Pokušaj ponovo."
+      }
+    },
+    "usage": {
+      "title": "Potrošnja",
+      "description": "Šta tvoj plan uključuje i koliko je od toga iskorišćeno.",
+      "plan": "Plan",
+      "generationsMonth": "Generisanja ovog meseca",
+      "generationsLifetime": "Generisanja (gostujući limit)",
+      "generationsValue": "{used} od {limit}",
+      "wordsPeriod": "Reči u ovom periodu",
+      "generationsAllTime": "Generisanja, ukupno",
+      "wordsAllTime": "Reči, ukupno",
+      "lengths": "Dostupne dužine",
+      "lengthsUpTo": "Do: {length}",
+      "resets": "Limit se obnavlja",
+      "resetsNever": "Nikad — gostujući limit važi za celu sesiju"
+    },
+    "billing": {
+      "title": "Naplata",
+      "badge": "Stiže u kasnijoj fazi",
+      "description": "Prelazak na Pro (12 $ mesečno, Stripe test režim — bez stvarne naplate) dodaje se u jednoj od narednih faza izrade. Danas nema šta da se plati niti da se podešava."
+    }
+  }
+}

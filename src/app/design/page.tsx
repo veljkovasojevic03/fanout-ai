@@ -16,8 +16,9 @@ import {
 import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { UsageMeter } from "@/components/ui/usage-meter";
 
-import { DialogDemo, FormDemo, LoadingButtonDemo, ToastDemo } from "./demos";
+import { DialogDemo, DropdownDemo, FormDemo, LoadingButtonDemo, ToastDemo } from "./demos";
 
 // Internal reference page: not linked from the product and kept out of search engines.
 export const metadata: Metadata = {
@@ -38,6 +39,8 @@ const SECTIONS = [
   { id: "toast", label: "Toast" },
   { id: "skeleton", label: "Skeleton" },
   { id: "empty", label: "EmptyState" },
+  { id: "usage", label: "UsageMeter" },
+  { id: "menu", label: "DropdownMenu" },
 ] as const;
 
 const COLORS = [
@@ -496,6 +499,56 @@ export default function DesignPage() {
               }
             />
           </div>
+        </Section>
+
+        <Section
+          id="usage"
+          title="UsageMeter"
+          description="Quota at a glance. The bar turns amber from 80% and red at the limit, but the mono counter always carries the meaning."
+        >
+          <Card>
+            <CardContent>
+              <Row label="ok">
+                <UsageMeter className="w-56" used={1} limit={5} label="1 of 5 generations used" />
+              </Row>
+              <Row label="low (80%+)">
+                <UsageMeter className="w-56" used={4} limit={5} label="4 of 5 generations used" />
+              </Row>
+              <Row label="exhausted">
+                <UsageMeter className="w-56" used={5} limit={5} label="5 of 5 generations used" />
+              </Row>
+              <Row label="size sm">
+                <UsageMeter
+                  size="sm"
+                  className="w-32"
+                  used={42}
+                  limit={100}
+                  label="42 of 100 generations used"
+                />
+              </Row>
+              <Row label="bar only">
+                <UsageMeter
+                  hideCount
+                  className="w-56"
+                  used={2}
+                  limit={3}
+                  label="2 of 3 generations used"
+                />
+              </Row>
+            </CardContent>
+          </Card>
+        </Section>
+
+        <Section
+          id="menu"
+          title="DropdownMenu"
+          description="Arrow keys move, Enter selects, Esc closes and returns focus to the trigger. Type a letter to jump to an item."
+        >
+          <Card>
+            <CardContent>
+              <DropdownDemo />
+            </CardContent>
+          </Card>
         </Section>
       </main>
     </div>

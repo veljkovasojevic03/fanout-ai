@@ -2,6 +2,7 @@
   "name": "fanout-ai",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "One idea. Five formats. AI content SaaS — portfolio project.",
   "scripts": {
     "dev": "next dev",
@@ -11,13 +12,14 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "i18n:check": "node scripts/i18n-check.ts",
     "test:db": "vitest run --config vitest.db.config.mts",
     "test:db:remote": "vitest run --config vitest.db.remote.config.mts",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.18.0"
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.6.2",
@@ -27,6 +29,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^1.55.0",
     "next": "16.4.0",
+    "next-intl": "^4.14.9",
     "radix-ui": "^1.7.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",

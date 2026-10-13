@@ -1,6 +1,7 @@
 "use client"; // Error boundaries must be Client Components
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 import { StatusScreen } from "@/components/layout/status-screen";
@@ -13,6 +14,8 @@ export default function RouteError({
   error: Error & { digest?: string };
   retry: () => void;
 }) {
+  const t = useTranslations();
+
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -20,14 +23,14 @@ export default function RouteError({
   // Never render error.message: it can carry internal details. The digest is safe.
   return (
     <StatusScreen
-      code="Error"
-      title="Something went wrong."
-      description="An unexpected error interrupted this page. Trying again usually fixes it."
-      reference={error.digest}
+      code={t("error.code")}
+      title={t("error.title")}
+      description={t("error.description")}
+      reference={error.digest ? t("error.reference", { id: error.digest }) : undefined}
     >
-      <Button onClick={() => retry()}>Try again</Button>
+      <Button onClick={() => retry()}>{t("common.tryAgain")}</Button>
       <Button asChild variant="secondary">
-        <Link href="/">Back to home</Link>
+        <Link href="/">{t("common.backHome")}</Link>
       </Button>
     </StatusScreen>
   );

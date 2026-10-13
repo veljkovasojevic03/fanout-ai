@@ -1,0 +1,346 @@
+{
+  "meta": {
+    "title": "Fanout AI — One idea. Five formats.",
+    "description": "Turn one idea into a blog post, LinkedIn post, Instagram caption, email newsletter and X thread — streamed at once."
+  },
+  "common": {
+    "taglineLead": "One idea.",
+    "taglineAccent": "Five formats.",
+    "tryAgain": "Try again",
+    "backHome": "Back to home",
+    "close": "Close",
+    "notifications": "Notifications",
+    "skipToContent": "Skip to content",
+    "notBuiltYet": "Not built yet",
+    "plans": {
+      "guest": "Guest",
+      "free": "Free",
+      "pro": "Pro"
+    },
+    "formats": {
+      "blog": "Blog post",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "email": "Email",
+      "x_thread": "X thread"
+    },
+    "tones": {
+      "professional": "Professional",
+      "casual": "Casual",
+      "funny": "Funny",
+      "inspirational": "Inspirational"
+    },
+    "lengths": {
+      "short": "Short",
+      "medium": "Medium",
+      "long": "Long"
+    },
+    "languages": {
+      "en": "English",
+      "sr": "Serbian"
+    }
+  },
+  "home": {
+    "status": "In development",
+    "lead": "Give Fanout one idea and get five ready-to-publish pieces, streamed side by side.",
+    "formatsLabel": "Output formats",
+    "note": "Accounts and guest sessions work today. The generator, library and publishing are being built phase by phase.",
+    "tryGuest": "Try as guest",
+    "signUp": "Sign up",
+    "logIn": "Log in",
+    "openApp": "Open your workspace"
+  },
+  "notFound": {
+    "metaTitle": "Page not found",
+    "title": "This page fanned out into nothing.",
+    "description": "The link may be broken, or the page may have moved. Head back and try again."
+  },
+  "error": {
+    "code": "Error",
+    "title": "Something went wrong.",
+    "description": "An unexpected error interrupted this page. Trying again usually fixes it.",
+    "reference": "ref: {id}"
+  },
+  "globalError": {
+    "metaTitle": "Something went wrong · Fanout AI",
+    "title": "Fanout AI hit a snag.",
+    "description": "The app failed to load. Trying again usually fixes it — your saved content is safe."
+  },
+  "wakingUp": {
+    "title": "Demo is waking up",
+    "description": "This demo runs on a free database that goes to sleep when nobody visits. Hang tight — it is usually back within a minute.",
+    "checking": "Checking…",
+    "nextCheck": "Checking again in {seconds, plural, one {# second} other {# seconds}}",
+    "checkNow": "Check now",
+    "stillDown": "Still asleep. A free-tier database pauses after a week without visitors and then has to be restarted by the owner. Please come back a little later."
+  },
+  "auth": {
+    "or": "or",
+    "fields": {
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "newPassword": "New password",
+      "passwordHint": "At least 8 characters."
+    },
+    "google": {
+      "continue": "Continue with Google",
+      "signUp": "Sign up with Google"
+    },
+    "login": {
+      "metaTitle": "Log in",
+      "title": "Welcome back",
+      "description": "Log in to your Fanout workspace.",
+      "submit": "Log in",
+      "forgot": "Forgot your password?",
+      "newHere": "New here? <link>Create an account</link>",
+      "justLooking": "Just looking? <link>Try as guest</link>"
+    },
+    "signup": {
+      "metaTitle": "Create account",
+      "title": "Create your account",
+      "description": "Free plan: 5 generations a month, five formats each. No card needed.",
+      "submit": "Create account",
+      "haveAccount": "Already have an account? <link>Log in</link>",
+      "justLooking": "Just looking? <link>Try as guest</link>"
+    },
+    "guest": {
+      "metaTitle": "Try as guest",
+      "title": "Try Fanout as a guest",
+      "description": "No email, no password. You can turn the guest session into a real account later and keep everything you made.",
+      "included1": "3 generations, five formats each",
+      "included2": "Save pieces to your library",
+      "included3": "Edit and export",
+      "notIncludedPrefix": "Not included:",
+      "notIncluded1": "Publishing and scheduling",
+      "notIncluded2": "Upgrading to Pro",
+      "submit": "Continue as guest",
+      "footer": "Rather have an account? <signup>Sign up free</signup> or <login>log in</login>"
+    },
+    "reset": {
+      "metaTitle": "Reset password",
+      "title": "Reset your password",
+      "description": "Enter your account email and we'll send you a link to choose a new password.",
+      "submit": "Send reset link",
+      "footer": "Remembered it? <link>Back to log in</link>"
+    },
+    "updatePassword": {
+      "metaTitle": "Set a password",
+      "title": "Set a password",
+      "description": "Choose a password for your account. You'll use it with your email to log in.",
+      "submit": "Save password"
+    },
+    "upgrade": {
+      "metaTitle": "Create your account",
+      "title": "Create your account",
+      "description": "Everything you made as a guest stays in your library. You'll move to the Free plan: 5 generations a month, plus publishing.",
+      "emailSubmit": "Continue with email",
+      "footer": "Already have an account? <link>Log in</link> instead — the guest session's content will not be moved."
+    },
+    "notConfigured": {
+      "title": "Sign-in isn't set up yet",
+      "description": "This deployment has no Supabase project connected. Add the Supabase keys to the environment (see .env.example) and restart."
+    },
+    "errors": {
+      "invalid_input": "Check the highlighted fields and try again.",
+      "invalid_credentials": "That email and password don't match. Try again or reset your password.",
+      "email_not_confirmed": "Confirm your email first — check your inbox for the link we sent.",
+      "email_taken": "An account with this email already exists. Log in instead.",
+      "weak_password": "Choose a stronger password: at least 8 characters, not a common one.",
+      "same_password": "Your new password must be different from the current one.",
+      "captcha_required": "The security check hasn't finished yet. Wait a moment and try again.",
+      "captcha_failed": "The security check failed. Reload the page and try again.",
+      "rate_limited": "Too many attempts. Wait a few minutes before trying again.",
+      "guest_disabled": "Guest mode isn't available right now. Create a free account instead.",
+      "provider_disabled": "This sign-in method isn't available right now.",
+      "linking_disabled": "Linking a Google account isn't available right now. Use email instead.",
+      "identity_taken": "That Google account already belongs to another Fanout account. Log in with it instead.",
+      "link_expired": "This link has expired or was already used. Request a new one.",
+      "session_missing": "Your session has ended. Log in again to continue.",
+      "not_configured": "Sign-in isn't set up on this deployment yet.",
+      "unavailable": "We couldn't reach the server. Check your connection and try again.",
+      "unknown": "Something went wrong. Try again."
+    },
+    "fieldErrors": {
+      "email_invalid": "Enter a valid email address.",
+      "password_too_short": "Use at least 8 characters.",
+      "password_too_long": "Use at most 72 characters."
+    },
+    "notices": {
+      "check_email_signup": "Check your inbox — we sent a link to confirm your email.",
+      "check_email_reset": "If an account exists for that email, a reset link is on its way. It can take a minute.",
+      "check_email_upgrade": "Check your inbox — confirm your email to finish creating your account. Your content stays right here."
+    }
+  },
+  "shell": {
+    "navLabel": "Main navigation",
+    "nav": {
+      "dashboard": "Dashboard",
+      "generate": "Generate",
+      "library": "Library",
+      "calendar": "Calendar",
+      "settings": "Settings"
+    },
+    "usage": {
+      "label": "Generations",
+      "meter": "{used} of {limit} generations used",
+      "periodMonth": "this month",
+      "periodLifetime": "guest allowance",
+      "left": "{count, plural, one {# left} other {# left}}"
+    },
+    "language": {
+      "label": "Language",
+      "switchTo": "Switch language to {language}"
+    },
+    "userMenu": {
+      "open": "Account menu",
+      "guest": "Guest session",
+      "settings": "Settings",
+      "upgrade": "Create free account",
+      "logOut": "Log out",
+      "endSession": "End guest session"
+    },
+    "guestCta": {
+      "title": "Keep what you make",
+      "body": "Guest sessions live in this browser only. Create a free account to keep your content.",
+      "action": "Create free account"
+    },
+    "loadError": {
+      "title": "We couldn't load your workspace",
+      "description": "Your account data didn't load. Your content is safe — try again in a moment."
+    }
+  },
+  "dashboard": {
+    "metaTitle": "Dashboard",
+    "greeting": "Welcome back, {name}",
+    "greetingPlain": "Welcome back",
+    "greetingGuest": "Welcome, guest",
+    "subtitle": "One idea in, five formats out. Here is where things stand.",
+    "stats": {
+      "generations": "Generations",
+      "generationsMonth": "This month",
+      "generationsLifetime": "Guest allowance — does not reset",
+      "remaining": "{count, plural, one {# left} other {# left}}",
+      "resets": "Resets {date}",
+      "words": "Words generated",
+      "wordsAllTime": "{count, plural, one {# word} other {# words}} all time",
+      "saved": "Saved pieces",
+      "savedHint": "In your library"
+    },
+    "presets": {
+      "title": "Quick start",
+      "description": "Pick a preset to prefill the generator. You can change everything before generating.",
+      "use": "Use preset",
+      "items": {
+        "product_launch": {
+          "title": "Product launch",
+          "description": "Announce something new with a clear benefit and a call to action.",
+          "topic": "We are launching a new product — here is what it does and who it is for"
+        },
+        "weekly_newsletter": {
+          "title": "Weekly newsletter",
+          "description": "A friendly round-up for the people who follow your work.",
+          "topic": "This week's update: what we shipped, what we learned and what comes next"
+        },
+        "thought_leadership": {
+          "title": "Thought-leadership post",
+          "description": "Share a strong opinion from your own experience.",
+          "topic": "An unpopular opinion from my work, and the experience behind it"
+        },
+        "event_announcement": {
+          "title": "Event announcement",
+          "description": "Invite people to an event and give them a reason to come.",
+          "topic": "Join us at our upcoming event — what to expect and how to sign up"
+        }
+      }
+    },
+    "recent": {
+      "title": "Recent content",
+      "openLibrary": "Open library",
+      "words": "{count, plural, one {# word} other {# words}}",
+      "updated": "Updated {time}",
+      "emptyTitle": "Nothing saved yet",
+      "emptyDescription": "Pieces you save from the generator show up here.",
+      "emptyAction": "Generate something",
+      "errorTitle": "We couldn't load your recent content",
+      "errorDescription": "The rest of the page is fine. Reload to try again."
+    }
+  },
+  "generate": {
+    "metaTitle": "Generate",
+    "title": "Generate",
+    "description": "The generator is the next build phase. Presets already prefill it — this is what it will start with.",
+    "presetLoaded": "Preset loaded",
+    "noPresetTitle": "No preset selected",
+    "noPresetDescription": "Pick a quick-start preset on the dashboard to see how it prefills the generator.",
+    "backToDashboard": "Back to dashboard",
+    "fields": {
+      "topic": "Topic",
+      "tone": "Tone",
+      "length": "Length",
+      "language": "Content language",
+      "formats": "Formats"
+    }
+  },
+  "library": {
+    "metaTitle": "Library",
+    "title": "Library",
+    "description": "Search, tag, edit and export everything you have saved.",
+    "emptyTitle": "The library is not built yet",
+    "emptyDescription": "Saved pieces, search, tags and export arrive in a later build phase. Nothing is lost in the meantime: content is already stored per account."
+  },
+  "calendar": {
+    "metaTitle": "Calendar",
+    "title": "Calendar",
+    "description": "Schedule pieces and see what goes out when.",
+    "emptyTitle": "The calendar is not built yet",
+    "emptyDescription": "Scheduling and publishing to email and Discord arrive in a later build phase."
+  },
+  "settings": {
+    "metaTitle": "Settings",
+    "title": "Settings",
+    "description": "Your profile, defaults and usage.",
+    "profile": {
+      "title": "Profile",
+      "description": "These defaults prefill the generator. You can still change them for each generation.",
+      "email": "Email",
+      "guestEmail": "Guest session — no email yet",
+      "displayName": "Display name",
+      "displayNameHint": "Shown in your workspace. Up to 80 characters.",
+      "displayNamePlaceholder": "Your name",
+      "uiLanguage": "Interface language",
+      "uiLanguageHint": "The language of buttons, menus and messages.",
+      "contentLanguage": "Default content language",
+      "contentLanguageHint": "The language Fanout writes in. Independent of the interface language.",
+      "tone": "Default tone",
+      "submit": "Save changes",
+      "saved": "Settings saved",
+      "errors": {
+        "invalid_input": "Check the highlighted fields and try again.",
+        "name_too_long": "Use at most 80 characters.",
+        "session_missing": "Your session has ended. Log in again to continue.",
+        "save_failed": "We couldn't save your settings. Try again."
+      }
+    },
+    "usage": {
+      "title": "Usage",
+      "description": "What your plan includes and how much of it you have used.",
+      "plan": "Plan",
+      "generationsMonth": "Generations this month",
+      "generationsLifetime": "Generations (guest allowance)",
+      "generationsValue": "{used} of {limit}",
+      "wordsPeriod": "Words this period",
+      "generationsAllTime": "Generations, all time",
+      "wordsAllTime": "Words, all time",
+      "lengths": "Available lengths",
+      "lengthsUpTo": "Up to {length}",
+      "resets": "Allowance resets",
+      "resetsNever": "Never — guest allowance is for the whole session"
+    },
+    "billing": {
+      "title": "Billing",
+      "badge": "Coming in a later phase",
+      "description": "Upgrading to Pro ($12/month, Stripe test mode — no real charges) is added in a later build phase. There is nothing to pay or manage today."
+    }
+  }
+}

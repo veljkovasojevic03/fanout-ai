@@ -1,7 +1,7 @@
 /**
  * Stable, UI-facing auth error codes. Supabase's own error strings never reach
  * the user: every failure is mapped to one of these codes, and the code is what
- * gets translated. (Phase 2 moves the English text below into next-intl.)
+ * gets translated (messages/*.json → auth.errors).
  */
 export const AUTH_ERROR_CODES = [
   "invalid_input",
@@ -76,27 +76,9 @@ export function mapAuthError(error: AuthErrorLike | null | undefined): AuthError
   return "unknown";
 }
 
-export const AUTH_ERROR_MESSAGES: Record<AuthErrorCode, string> = {
-  invalid_input: "Check the highlighted fields and try again.",
-  invalid_credentials: "That email and password don't match. Try again or reset your password.",
-  email_not_confirmed: "Confirm your email first — check your inbox for the link we sent.",
-  email_taken: "An account with this email already exists. Log in instead.",
-  weak_password: "Choose a stronger password: at least 8 characters, not a common one.",
-  same_password: "Your new password must be different from the current one.",
-  captcha_required: "The security check hasn't finished yet. Wait a moment and try again.",
-  captcha_failed: "The security check failed. Reload the page and try again.",
-  rate_limited: "Too many attempts. Wait a few minutes before trying again.",
-  guest_disabled: "Guest mode isn't available right now. Create a free account instead.",
-  provider_disabled: "This sign-in method isn't available right now.",
-  linking_disabled: "Linking a Google account isn't available right now. Use email instead.",
-  identity_taken:
-    "That Google account already belongs to another Fanout account. Log in with it instead.",
-  link_expired: "This link has expired or was already used. Request a new one.",
-  session_missing: "Your session has ended. Log in again to continue.",
-  not_configured: "Sign-in isn't set up on this deployment yet.",
-  unavailable: "We couldn't reach the server. Check your connection and try again.",
-  unknown: "Something went wrong. Try again.",
-};
+// The text for every code lives in messages/*.json (auth.errors, auth.fieldErrors,
+// auth.notices). The type-checked message keys make a missing translation a
+// compile error, and a unit test checks the catalogue against these lists.
 
 export const FIELD_ERROR_CODES = [
   "email_invalid",
@@ -105,17 +87,9 @@ export const FIELD_ERROR_CODES = [
 ] as const;
 export type FieldErrorCode = (typeof FIELD_ERROR_CODES)[number];
 
-export const FIELD_ERROR_MESSAGES: Record<FieldErrorCode, string> = {
-  email_invalid: "Enter a valid email address.",
-  password_too_short: "Use at least 8 characters.",
-  password_too_long: "Use at most 72 characters.",
-};
-
-export const AUTH_NOTICES = {
-  check_email_signup: "Check your inbox — we sent a link to confirm your email.",
-  check_email_reset:
-    "If an account exists for that email, a reset link is on its way. It can take a minute.",
-  check_email_upgrade:
-    "Check your inbox — confirm your email to finish creating your account. Your content stays right here.",
-} as const;
-export type AuthNotice = keyof typeof AUTH_NOTICES;
+export const AUTH_NOTICES = [
+  "check_email_signup",
+  "check_email_reset",
+  "check_email_upgrade",
+] as const;
+export type AuthNotice = (typeof AUTH_NOTICES)[number];
