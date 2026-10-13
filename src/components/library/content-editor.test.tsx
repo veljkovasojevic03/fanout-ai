@@ -16,6 +16,11 @@ const actions = vi.hoisted(() => ({
 }));
 
 vi.mock("@/lib/library/actions", () => actions);
+// The publish dialog has its own tests; here it only must not pull in server code.
+vi.mock("@/lib/publish/actions", () => ({
+  createPublishJobAction: vi.fn(),
+  getPublishOptionsAction: vi.fn(),
+}));
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: vi.fn(), replace: vi.fn(), refresh: vi.fn() }),
 }));

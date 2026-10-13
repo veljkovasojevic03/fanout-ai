@@ -3,6 +3,7 @@ import type { Route } from "next";
 import Link from "next/link";
 import { useFormatter, useNow, useTranslations } from "next-intl";
 
+import { PublishButton } from "@/components/publish/publish-dialog";
 import { ContentTypeIcon } from "@/components/shell/content-type-icon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,10 +18,12 @@ type LibraryListProps = {
   items: readonly ContentListItem[];
   total: number;
   params: LibraryParams;
+  /** Guests get the "Upgrade to publish" state from the row's publish button. */
+  guest?: boolean;
 };
 
 /** One page of saved pieces, with the result count and page links. */
-export function LibraryList({ items, total, params }: LibraryListProps) {
+export function LibraryList({ items, total, params, guest = false }: LibraryListProps) {
   const t = useTranslations();
   const format = useFormatter();
   const now = useNow();
@@ -40,11 +43,11 @@ export function LibraryList({ items, total, params }: LibraryListProps) {
       <Card>
         <ul className="divide-y divide-border">
           {items.map((item) => (
-            <li key={item.id} className="relative">
+            <li key={item.id} className="relative flex items-center">
               <Link
                 href={`/app/library/${item.id}` as Route}
                 aria-label={t("library.item.open", { title: item.title })}
-                className="flex items-center gap-3.5 rounded-[inherit] px-5 py-4 transition-colors hover:bg-white/[0.03] focus-visible:-outline-offset-2"
+                className="flex min-w-0 flex-1 items-center gap-3.5 rounded-[inherit] py-4 pr-2 pl-5 transition-colors hover:bg-white/[0.03] focus-visible:-outline-offset-2"
               >
                 <span className="flex size-9 shrink-0 items-center justify-center rounded-md border border-border bg-elevated text-muted">
                   <ContentTypeIcon type={item.type} className="size-4" />
@@ -75,6 +78,16 @@ export function LibraryList({ items, total, params }: LibraryListProps) {
                 </span>
                 <ChevronRight aria-hidden="true" className="size-4 shrink-0 text-subtle" />
               </Link>
+              {/* Next to the link, not inside it: a button cannot live in an anchor. */}
+              <PublishButton
+                contentId={item.id}
+                title={item.title}
+                guest={guest}
+                iconOnly
+                variant="ghost"
+                size="icon-sm"
+                className="mr-3 shrink-0"
+              />
             </li>
           ))}
         </ul>

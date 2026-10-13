@@ -4,10 +4,10 @@
 once: a blog post (with SEO meta), a LinkedIn post, an Instagram caption, an email newsletter and
 an X thread. UI in English and Serbian.
 
-> **Status: in development.** This is a portfolio project built phase by phase. Phases 0–5 are
+> **Status: in development.** This is a portfolio project built phase by phase. Phases 0–6 are
 > done (foundation, data layer and auth, app shell, generator, library and editor, plans and
-> billing); scheduling and publishing, and the landing page are not built yet. The full README (demo link,
-> architecture diagram, case study) lands in the final phase.
+> billing, scheduling and publishing); the landing page is not built yet. The full README (demo
+> link, architecture diagram, case study) lands in the final phase.
 
 ## What exists today
 
@@ -41,6 +41,17 @@ an X thread. UI in English and Serbian.
   only thing able to change a plan — signature verified on the raw body, idempotent, plan derived
   from the subscription status in the database
 - `/design/billing` — the pricing cards and Settings → Billing in every subscription state
+- Publishing: "Publish now" or "Schedule" from the editor and the library, to your own verified
+  email address or a Discord channel; a month calendar in your time zone, a job list with the
+  attempt log, reschedule, cancel and Retry
+- A dispatcher with two implementations: **n8n** (signed webhook out, signed callback back —
+  HMAC-SHA256 over `timestamp.body`, constant-time compare, 5-minute window) and **simulated**
+  (the default, and what the public demo uses; everything it touches is labelled "Simulated")
+- `POST /api/cron/tick` — claims due jobs atomically (`FOR UPDATE SKIP LOCKED`), dispatches them,
+  fails jobs stuck for 10 minutes, and doubles as the Supabase keep-alive; called every five
+  minutes by a GitHub Actions workflow
+- `n8n/` — docker-compose and two importable workflows for real delivery on your own machine
+- `/design/publish` — the calendar, the dialogs and the destinations in every state
 
 ## Run locally
 
@@ -68,10 +79,23 @@ To try billing locally (Stripe test mode only — a live key is refused):
 ```bash
 # STRIPE_SECRET_KEY=sk_test_… in .env.local, then:
 pnpm stripe:setup               # creates the Pro product + $12/month price, prints STRIPE_PRO_PRICE_ID
-stripe listen --forward-to localhost:3000/api/stripe/webhook   # prints STRIPE_WEBHOOK_SECRET
+# prints STRIPE_WEBHOOK_SECRET; recent Stripe CLI versions require the event list
+stripe listen --forward-to localhost:3000/api/stripe/webhook \
+  --events checkout.session.completed,customer.subscription.created,customer.subscription.updated,customer.subscription.deleted,invoice.payment_failed
 ```
 
 Pay with card `4242 4242 4242 4242`, any future expiry date and any CVC.
+
+Publishing works out of the box in **simulated** mode (nothing is sent, and the UI says so). For
+scheduled jobs, set `CRON_SECRET` (at least 16 characters) in `.env.local` and run the local ticker
+next to the dev server:
+
+```bash
+pnpm cron:dev                   # calls POST /api/cron/tick every 30 seconds
+```
+
+For real email and Discord delivery, run n8n with Docker and import the two workflows —
+[`n8n/README.md`](n8n/README.md) walks through it.
 
 ## Checks
 

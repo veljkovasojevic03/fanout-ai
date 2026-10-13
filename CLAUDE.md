@@ -11,9 +11,9 @@ zod · Vitest · Playwright · pnpm. Deploy: Vercel Hobby. CI/cron: GitHub Actio
 
 ## Commands
 
-- `pnpm dev` — dev server (`/design` = every component; `/design/{shell,generator,library,billing}` = previews)
+- `pnpm dev` — dev server (`/design` = every component; `/design/{shell,generator,library,billing,publish}` = previews)
 - `pnpm lint` · `pnpm typecheck` · `pnpm test` · `pnpm i18n:check` · `pnpm build`
-- `pnpm test:db` — RLS/grant/quota tests on in-process Postgres (`test:db:remote` = real DB)
+- `pnpm test:db` — RLS/grant/quota tests on in-process Postgres (`test:db:remote` = real DB) · `pnpm cron:dev` — local cron tick
 - `pnpm format` — Prettier (also sorts Tailwind classes) · `pnpm stripe:setup` — Pro product + price (test mode)
 
 ## Folder map
@@ -21,11 +21,11 @@ zod · Vitest · Playwright · pnpm. Deploy: Vercel Hobby. CI/cron: GitHub Actio
 - `src/app/` — routes, layouts, error boundaries, `globals.css` (design tokens)
 - `src/components/ui/` — internal kit (Button, Card, Field, Input, Select, Dialog, Toast…)
 - `src/components/{brand,layout,shell,auth,…}/` — wordmark, app shell, feature components
-- `src/lib/` — `supabase/` `auth/` `generation/` `llm/` `sample/` `source/` `content/` `library/` `refine/` `billing/`; server code imports `server-only`
+- `src/lib/` — `supabase/` `auth/` `generation/` `llm/` `sample/` `source/` `content/` `library/` `refine/` `billing/` `publish/`; server code imports `server-only`
 - `src/proxy.ts` — session refresh + first-line redirect for `/app/*` (Next 16 "proxy")
 - `supabase/migrations/` — the only place the DB schema changes; covered by `tests/db/`
 - `messages/` — `en.json`, `sr.json` (identical keys); `src/i18n/` — locale config and checks
-- `docs/DECISIONS.md` — one line per non-obvious decision
+- `docs/DECISIONS.md` — one line per non-obvious decision · `n8n/` — compose + workflows (see its README)
 
 ## Rules
 

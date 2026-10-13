@@ -62,6 +62,7 @@ export default async function ContentPage({ params }: PageProps<"/app/library/[i
         }}
         knownTags={knownTags}
         refinementsLeft={used === null ? null : Math.max(REFINE_LIMITS.maxPerGeneration - used, 0)}
+        guest={context.guest}
       />
     </>
   );

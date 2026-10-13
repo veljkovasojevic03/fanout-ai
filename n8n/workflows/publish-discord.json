@@ -1,0 +1,221 @@
+{
+  "name": "Fanout — publish to Discord",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fanout-publish-discord",
+        "responseMode": "responseNode",
+        "options": {
+          "rawBody": true
+        }
+      },
+      "id": "2ceb6446-a2c3-5f8e-8cbc-ef4bfcd2b381",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "da554f4e-04dd-50fb-ba58-b87b55f60d21"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Verifies the request from Fanout before anything is sent (spec §5.9):\n//   X-Signature: sha256=<hex HMAC-SHA256 of \"<X-Timestamp>.<raw body>\">\n// keyed with N8N_SHARED_SECRET. Constant-time compare, 5-minute replay window.\n// Throwing here makes the webhook answer 500, which Fanout records as a failure.\nconst crypto = require('crypto');\n\nconst secret = $env.N8N_SHARED_SECRET;\nif (!secret || secret.length < 16) {\n  throw new Error('N8N_SHARED_SECRET is not set (at least 16 characters).');\n}\n\nconst item = $input.first();\nconst headers = item.json.headers || {};\nconst timestamp = String(headers['x-timestamp'] || '');\nconst signature = String(headers['x-signature'] || '');\n\n// The signature covers the raw bytes. The Webhook node keeps them as binary\n// data (\"Raw Body\" option). Fanout builds the body with JSON.stringify, so\n// re-serialising the parsed body gives the same bytes if the raw copy is missing.\nlet raw;\ntry {\n  raw = (await this.helpers.getBinaryDataBuffer(0, 'data')).toString('utf8');\n} catch (error) {\n  raw = JSON.stringify(item.json.body);\n}\n\nconst expected =\n  'sha256=' +\n  crypto.createHmac('sha256', secret).update(timestamp + '.' + raw, 'utf8').digest('hex');\nconst given = Buffer.from(signature, 'utf8');\nconst wanted = Buffer.from(expected, 'utf8');\nif (given.length !== wanted.length || !crypto.timingSafeEqual(given, wanted)) {\n  throw new Error('Invalid signature.');\n}\n\nconst age = Math.abs(Math.floor(Date.now() / 1000) - Number(timestamp));\nif (!/^\\d{1,12}$/.test(timestamp) || age > 300) {\n  throw new Error('Stale request.');\n}\n\nconst payload = JSON.parse(raw);\nif (payload.version !== 1 || payload.kind !== 'discord') {\n  throw new Error('Unexpected payload.');\n}\nconst discord = payload.discord || {};\n// Defence in depth: only ever post to a Discord webhook, whatever was signed.\nconst pattern = /^https:\\/\\/discord\\.com\\/api\\/webhooks\\/[0-9]{5,30}\\/[A-Za-z0-9_-]{20,200}$/;\nif (typeof discord.webhookUrl !== 'string' || !pattern.test(discord.webhookUrl)) {\n  throw new Error('Unexpected payload.');\n}\nif (!Array.isArray(discord.messages) || discord.messages.length === 0 || discord.messages.length > 10) {\n  throw new Error('Unexpected payload.');\n}\n\nreturn [{ json: payload }];\n"
+      },
+      "id": "b346eb19-4f2a-511a-bd14-a49588c86e66",
+      "name": "Verify signature",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "noData",
+        "options": {
+          "responseCode": 202
+        }
+      },
+      "id": "75ef10eb-5262-5e87-9a1c-93f0e967253b",
+      "name": "Accept",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        440,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// One item per Discord message; the next node posts them one at a time, in order.\nconst job = $input.first().json;\nreturn job.discord.messages.map((content, index) => ({\n  json: { webhookUrl: job.discord.webhookUrl, content: String(content), index },\n}));\n"
+      },
+      "id": "aa6c973c-a9b3-57df-9faf-c1d58a0b1c13",
+      "name": "Split messages",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.webhookUrl }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ content: $json.content, allowed_mentions: { parse: [] } }) }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1200
+            }
+          },
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "id": "6ccb5824-0682-57ef-9e87-700c7b66e8fc",
+      "name": "Post to Discord",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        0
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Reports the outcome to Fanout, signed the same way as the request that came in.\n// Only ids, a yes/no and an HTTP status travel back — never the message or the URL.\nconst crypto = require('crypto');\n\nconst secret = $env.N8N_SHARED_SECRET;\nconst appUrl = String($env.FANOUT_APP_URL || '').replace(/\\/+$/, '');\nif (!secret || !appUrl) {\n  throw new Error('N8N_SHARED_SECRET and FANOUT_APP_URL must be set.');\n}\n\nconst job = $('Verify signature').first().json;\n\n// A delivery node that failed continues with an `error` field instead of stopping.\nconst failed = $input.all().find((entry) => entry.json && entry.json.error);\nconst result = { jobId: job.jobId, attemptId: job.attemptId, ok: !failed };\nif (failed) {\n  result.error = 'delivery_failed';\n  const error = failed.json.error || {};\n  const status = Number(error.httpCode || error.status || error.statusCode);\n  if (Number.isInteger(status) && status >= 100 && status <= 599) {\n    result.httpStatus = status;\n  }\n}\n\nconst body = JSON.stringify(result);\nconst timestamp = String(Math.floor(Date.now() / 1000));\nconst signature =\n  'sha256=' +\n  crypto.createHmac('sha256', secret).update(timestamp + '.' + body, 'utf8').digest('hex');\n\nreturn [{ json: { url: appUrl + '/api/publish/callback', body, timestamp, signature } }];\n"
+      },
+      "id": "b8474352-dd2d-593c-afaa-94dc281c144e",
+      "name": "Build callback",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Timestamp",
+              "value": "={{ $json.timestamp }}"
+            },
+            {
+              "name": "X-Signature",
+              "value": "={{ $json.signature }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.body }}",
+        "options": {}
+      },
+      "id": "0e2d8f77-307a-5614-b3bf-219e379dfa88",
+      "name": "Send callback",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        0
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Verify signature",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify signature": {
+      "main": [
+        [
+          {
+            "node": "Accept",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Accept": {
+      "main": [
+        [
+          {
+            "node": "Split messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split messages": {
+      "main": [
+        [
+          {
+            "node": "Post to Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post to Discord": {
+      "main": [
+        [
+          {
+            "node": "Build callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build callback": {
+      "main": [
+        [
+          {
+            "node": "Send callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

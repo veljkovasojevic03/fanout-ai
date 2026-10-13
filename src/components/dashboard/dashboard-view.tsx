@@ -61,7 +61,11 @@ export async function DashboardView({ account, guest, recent }: DashboardViewPro
     limit.period === "lifetime"
       ? t("dashboard.stats.generationsLifetime")
       : `${t("dashboard.stats.generationsMonth")} · ${t("dashboard.stats.resets", {
-          date: format.dateTime(nextResetDate(now), { day: "numeric", month: "long" }),
+          date: format.dateTime(nextResetDate(now), {
+            day: "numeric",
+            month: "long",
+            timeZone: "UTC",
+          }),
         })}`;
 
   return (

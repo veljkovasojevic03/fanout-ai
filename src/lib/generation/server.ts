@@ -88,6 +88,14 @@ export const RATE_LIMITS = {
   refineDaily: { windowSeconds: 86_400, max: 60 },
   // Checkout and portal sessions: each one is a call to Stripe.
   billing: { windowSeconds: 60, max: 6 },
+  // Publishing: every job ends in a message to an inbox or a Discord channel.
+  // The daily limit is what bounds that, whatever is scheduled for later.
+  publish: { windowSeconds: 60, max: 10 },
+  publishDaily: { windowSeconds: 86_400, max: 100 },
+  // Reschedule, cancel, add or remove a destination.
+  publishWrite: { windowSeconds: 60, max: 30 },
+  // Each test is a real request to Discord.
+  destinationTest: { windowSeconds: 600, max: 5 },
 } as const;
 
 export type RateLimitName = keyof typeof RATE_LIMITS;

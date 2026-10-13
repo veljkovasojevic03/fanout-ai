@@ -1,6 +1,8 @@
 import { cookies, headers } from "next/headers";
 import { getRequestConfig } from "next-intl/server";
 
+import { DEFAULT_TIME_ZONE, isTimeZone, TIME_ZONE_COOKIE } from "@/lib/publish/time";
+
 import { INTL_LOCALE, isAppLocale, LOCALE_COOKIE, matchAcceptLanguage } from "./config";
 
 /**
@@ -12,6 +14,7 @@ import { INTL_LOCALE, isAppLocale, LOCALE_COOKIE, matchAcceptLanguage } from "./
 export default getRequestConfig(async () => {
   const cookieStore = await cookies();
   const fromCookie = cookieStore.get(LOCALE_COOKIE)?.value;
+  const fromTimeZoneCookie = cookieStore.get(TIME_ZONE_COOKIE)?.value;
 
   const appLocale = isAppLocale(fromCookie)
     ? fromCookie
@@ -22,8 +25,8 @@ export default getRequestConfig(async () => {
   return {
     locale: INTL_LOCALE[appLocale],
     messages,
-    // The server does not know the visitor's time zone; UTC keeps server and
-    // client output identical. User-local times arrive with the calendar (Phase 6).
-    timeZone: "UTC",
+    // The browser's zone, remembered in a cookie by <TimeZoneSync> so the server
+    // renders the same times the client would. UTC until that cookie exists.
+    timeZone: isTimeZone(fromTimeZoneCookie) ? fromTimeZoneCookie : DEFAULT_TIME_ZONE,
   };
 });

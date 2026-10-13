@@ -83,7 +83,12 @@ export default async function LibraryPage({ searchParams }: PageProps<"/app/libr
               }
             />
           ) : (
-            <LibraryList items={page.items} total={page.total} params={params} />
+            <LibraryList
+              items={page.items}
+              total={page.total}
+              params={params}
+              guest={context.guest}
+            />
           )}
         </div>
       )}

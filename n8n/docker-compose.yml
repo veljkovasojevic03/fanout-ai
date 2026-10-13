@@ -1,0 +1,36 @@
+# n8n for local publishing (spec §2: not hosted publicly — the public demo uses
+# the simulated dispatcher). Start with `docker compose up -d` from this folder
+# after copying .env.example to .env. See README.md here.
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:2.44.0
+    restart: unless-stopped
+    ports:
+      # Bound to this machine only: the webhooks are for the app next door.
+      - "127.0.0.1:5678:5678"
+    environment:
+      N8N_HOST: localhost
+      N8N_PORT: "5678"
+      N8N_PROTOCOL: http
+      WEBHOOK_URL: http://localhost:5678/
+      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE:-Europe/Belgrade}
+      N8N_DIAGNOSTICS_ENABLED: "false"
+
+      # Shared with the app's .env.local. Signs requests in both directions.
+      N8N_SHARED_SECRET: ${N8N_SHARED_SECRET:?Set N8N_SHARED_SECRET in n8n/.env}
+      # Where n8n reaches the app to report back. From inside the container,
+      # the host's localhost is host.docker.internal.
+      FANOUT_APP_URL: ${FANOUT_APP_URL:-http://host.docker.internal:3000}
+      # The From address of published emails (usually your SMTP account).
+      FANOUT_SMTP_FROM: ${FANOUT_SMTP_FROM:?Set FANOUT_SMTP_FROM in n8n/.env}
+
+      # The workflows' Code nodes compute HMACs (node:crypto) and read the
+      # three variables above through $env.
+      NODE_FUNCTION_ALLOW_BUILTIN: crypto
+      N8N_BLOCK_ENV_ACCESS_IN_NODE: "false"
+    extra_hosts:
+      # Makes host.docker.internal resolve on Linux too.
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # Workflows, credentials (encrypted) and execution history. Git-ignored.
+      - ./data:/home/node/.n8n

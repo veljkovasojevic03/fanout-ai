@@ -57,7 +57,11 @@ export default async function GeneratePage({ searchParams }: PageProps<"/app/gen
         resetDate={
           limit.period === "lifetime"
             ? null
-            : format.dateTime(nextResetDate(now), { day: "numeric", month: "long" })
+            : format.dateTime(nextResetDate(now), {
+                day: "numeric",
+                month: "long",
+                timeZone: "UTC",
+              })
         }
         presetName={presetId ? t(`dashboard.presets.items.${presetId}.title`) : null}
       />

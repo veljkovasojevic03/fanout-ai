@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { FanoutMark, Wordmark } from "@/components/brand/wordmark";
+import { TimeZoneSync } from "@/components/publish/time-zone-sync";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -33,6 +34,7 @@ export async function AppShell({ account, email, guest, children }: AppShellProp
 
   return (
     <div className="min-h-dvh lg:pl-60">
+      <TimeZoneSync />
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-sm focus:font-medium focus:text-accent-foreground"

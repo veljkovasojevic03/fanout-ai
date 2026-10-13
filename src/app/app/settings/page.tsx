@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getFormatter, getNow, getTranslations } from "next-intl/server";
 
 import { BillingSection } from "@/components/billing/billing-section";
+import { DestinationsSection } from "@/components/publish/destinations-section";
 import { ProfileForm } from "@/components/settings/profile-form";
 import { PageHeader } from "@/components/shell/page-header";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +10,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { UsageMeter } from "@/components/ui/usage-meter";
 import { getAppContext, nextResetDate } from "@/lib/auth/session";
 import { getBillingState, getPlanCatalog } from "@/lib/billing/server";
+import { publishMode } from "@/lib/publish/dispatcher";
+import { listDestinations } from "@/lib/publish/queries";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("settings");
@@ -30,13 +33,15 @@ export default async function SettingsPage({ searchParams }: PageProps<"/app/set
 
   const { user, account, guest } = context;
   const { profile, limit, usage } = account;
-  const [t, format, now, params, billing, catalog] = await Promise.all([
+  const [t, format, now, params, billing, catalog, destinations] = await Promise.all([
     getTranslations(),
     getFormatter(),
     getNow(),
     searchParams,
     getBillingState(),
     getPlanCatalog(),
+    // Guests cannot have destinations; there is nothing to load for them.
+    guest ? [] : listDestinations(),
   ]);
 
   // Set by Stripe's return URLs. It only chooses which notice to show.
@@ -121,11 +126,21 @@ export default async function SettingsPage({ searchParams }: PageProps<"/app/set
                       day: "numeric",
                       month: "long",
                       year: "numeric",
+                      // The allowance resets at the UTC month boundary.
+                      timeZone: "UTC",
                     })}
               </Stat>
             </dl>
           </CardContent>
         </Card>
+
+        <DestinationsSection
+          guest={guest}
+          email={guest ? null : (user.email ?? null)}
+          emailVerified={Boolean(user.email && user.email_confirmed_at)}
+          destinations={destinations}
+          mode={publishMode()}
+        />
 
         <BillingSection
           plan={profile.plan}

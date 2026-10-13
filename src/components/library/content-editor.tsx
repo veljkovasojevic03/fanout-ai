@@ -23,6 +23,7 @@ import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState, useTransition } from "react";
 
 import { FormAlert } from "@/components/auth/form-parts";
+import { PublishButton } from "@/components/publish/publish-dialog";
 import { ContentTypeIcon } from "@/components/shell/content-type-icon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -88,6 +89,8 @@ type ContentEditorProps = {
   knownTags: readonly string[];
   /** Refinements left on the generation this piece came from; null = no such cap. */
   refinementsLeft: number | null;
+  /** Guests can open the publish dialog, but only to be told to create an account. */
+  guest?: boolean;
 };
 
 type Draft = Pick<EditorContent, "title" | "body" | "language" | "tags">;
@@ -108,9 +111,14 @@ const MAX_UNDO = 20;
 /**
  * The editor for one saved piece (spec §4.3, §4.4): Markdown with a live
  * preview (side by side on desktop, tabs on mobile), debounced autosave with a
- * visible state, tags, the refine actions, export, duplicate and delete.
+ * visible state, tags, the refine actions, publish, export, duplicate and delete.
  */
-export function ContentEditor({ content, knownTags, refinementsLeft }: ContentEditorProps) {
+export function ContentEditor({
+  content,
+  knownTags,
+  refinementsLeft,
+  guest = false,
+}: ContentEditorProps) {
   const t = useTranslations();
   const router = useRouter();
   const { id, type } = content;
@@ -321,6 +329,15 @@ export function ContentEditor({ content, knownTags, refinementsLeft }: ContentEd
 
         <div className="flex flex-wrap items-center gap-2">
           <SaveIndicator status={autosave.status} onRetry={() => void autosave.flush()} />
+
+          {/* What goes out is the saved version, so the dialog saves first. */}
+          <PublishButton
+            contentId={id}
+            title={title.trim() || content.title}
+            guest={guest}
+            beforeSubmit={autosave.flush}
+            variant="primary"
+          />
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

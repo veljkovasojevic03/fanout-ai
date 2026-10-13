@@ -29,7 +29,9 @@ export async function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     // Everything except static assets, image optimisation, metadata files, the health
-    // check and the Stripe webhook (no session there: it is authenticated by its signature).
-    "/((?!_next/static|_next/image|favicon.ico|icon.svg|api/health|api/stripe/webhook|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml)$).*)",
+    // check and the machine-to-machine endpoints. Those have no session: the Stripe
+    // webhook and the n8n callback are authenticated by their signature, the cron tick
+    // by its bearer secret.
+    "/((?!_next/static|_next/image|favicon.ico|icon.svg|api/health|api/stripe/webhook|api/publish/callback|api/cron/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml)$).*)",
   ],
 };
