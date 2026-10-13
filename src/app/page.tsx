@@ -45,15 +45,23 @@ export default function HomePage() {
             ))}
           </ul>
           <p className="max-w-md text-sm leading-relaxed text-subtle">
-            The foundation and design system are in place. The generator, library and publishing are
-            being built phase by phase.
+            Accounts and guest sessions work today. The generator, library and publishing are being
+            built phase by phase.
           </p>
-          <Button asChild variant="secondary">
-            <Link href="/design">
-              View the design system
-              <ArrowRight aria-hidden="true" />
-            </Link>
-          </Button>
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
+            <Button asChild size="lg">
+              <Link href="/guest">
+                Try as guest
+                <ArrowRight aria-hidden="true" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="secondary">
+              <Link href="/signup">Sign up</Link>
+            </Button>
+            <Button asChild size="lg" variant="ghost">
+              <Link href="/login">Log in</Link>
+            </Button>
+          </div>
         </div>
       </main>
     </div>

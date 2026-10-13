@@ -13,6 +13,7 @@ zod · Vitest · Playwright · pnpm. Deploy: Vercel Hobby. CI/cron: GitHub Actio
 
 - `pnpm dev` — dev server (`/design` shows every UI component and state)
 - `pnpm lint` · `pnpm typecheck` · `pnpm test` · `pnpm build`
+- `pnpm test:db` — RLS/grant/quota tests on in-process Postgres (`test:db:remote` = real DB)
 - `pnpm format` — Prettier (also sorts Tailwind classes)
 
 ## Folder map
@@ -20,14 +21,15 @@ zod · Vitest · Playwright · pnpm. Deploy: Vercel Hobby. CI/cron: GitHub Actio
 - `src/app/` — routes, layouts, error boundaries, `globals.css` (design tokens)
 - `src/components/ui/` — internal kit (Button, Card, Field, Input, Select, Dialog, Toast…)
 - `src/components/brand/`, `src/components/layout/` — wordmark, shared page shells
-- `src/lib/` — utilities; server-only code goes in modules that `import "server-only"`
-- `supabase/migrations/` — the only place the DB schema changes
+- `src/lib/` — `supabase/` clients, `auth/` actions; server-only modules `import "server-only"`
+- `src/proxy.ts` — session refresh + first-line redirect for `/app/*` (Next 16 "proxy")
+- `supabase/migrations/` — the only place the DB schema changes; covered by `tests/db/`
 - `messages/` — `en.json`, `sr.json` (identical key sets)
 - `docs/DECISIONS.md` — one line per non-obvious decision
 
 ## Rules
 
-- **Run `pnpm lint`, `pnpm typecheck`, `pnpm test` before finishing any task.**
+- **Run `pnpm lint`, `pnpm typecheck`, `pnpm test` before finishing any task** (+ `test:db` on SQL).
 - **All user-facing strings go through i18n** (`en` + `sr` Latin), including errors, toasts, meta.
 - **DB changes only via migrations.** Never edit the schema in the dashboard.
 - **Never expose the service-role key.** Only modules importing `server-only` may read it.
