@@ -267,6 +267,111 @@ async function main(): Promise<void> {
       .eq("user_id", userId);
     check("exactly 3 generation rows exist", count === 3, `count=${count}`);
 
+    console.warn("\nLibrary, refine and export");
+    // Saved as the user (anon key + session), so RLS is part of what is tested.
+    const { data: saved, error: saveError } = await browser
+      .from("contents")
+      .insert({
+        user_id: userId,
+        generation_id: generationId,
+        type: "blog",
+        title: "Zašto mali timovi treba da objavljuju svake nedelje",
+        body_md: text,
+        language: "sr",
+        tags: ["smoke", "timovi"],
+      })
+      .select("id")
+      .single();
+    check("a piece is saved to the library under RLS", !saveError, saveError?.message);
+    const contentId = String(saved?.id);
+
+    const { error: badTag } = await browser
+      .from("contents")
+      .update({ tags: [" padded "] })
+      .eq("id", contentId);
+    check("a malformed tag is rejected by the database", badTag?.code === "23514", badTag?.code);
+
+    const { data: tagRows } = await browser.rpc("content_tags");
+    check(
+      "content_tags() lists the user's tags",
+      JSON.stringify((tagRows as { tag: string }[] | null)?.map((row) => row.tag)) ===
+        JSON.stringify(["smoke", "timovi"]),
+      JSON.stringify(tagRows),
+    );
+
+    const refineRequest = {
+      contentId,
+      action: "shorten",
+      scope: "all",
+      text,
+      language: "sr",
+    };
+    const refine = await post("/api/refine", refineRequest);
+    const refineEvents = await readSse(refine);
+    const refined = refineEvents
+      .filter((e) => e.event === "delta")
+      .map((e) => e.data.text)
+      .join("");
+    check("refine streams a suggestion", refineEvents.at(-1)?.event === "done");
+    check(
+      "…that is shorter than the original",
+      refined.length > 0 && refined.length < text.length,
+      `${refined.length} vs ${text.length} chars`,
+    );
+    check(
+      "…and shares the generation's budget with regenerate (8 of 10 left)",
+      refineEvents[0]?.data.regenerationsLeft === 8,
+      `left=${String(refineEvents[0]?.data.regenerationsLeft)}`,
+    );
+
+    const unknownPiece = await post("/api/refine", { ...refineRequest, contentId: randomUUID() });
+    check("refining an unknown piece is not found (404)", unknownPiece.status === 404);
+
+    const noTone = await post("/api/refine", { ...refineRequest, action: "tone" });
+    check("a tone change without a tone is refused (400)", noTone.status === 400);
+
+    if (expectedMode === "sample") {
+      const translate = await post("/api/refine", {
+        ...refineRequest,
+        action: "translate",
+        text: "Ovo je moj tekst, a ne ugrađeni primer.",
+        targetLanguage: "en",
+      });
+      check("sample mode refuses to fake a translation (409)", translate.status === 409);
+      check("…with code sample_unsupported", (await codeOf(translate)) === "sample_unsupported");
+    }
+    const { data: afterRefine } = await admin
+      .from("generations")
+      .select("refinements_used")
+      .eq("id", generationId)
+      .maybeSingle();
+    check(
+      "refused refines were not counted (2 used: 1 regenerate, 1 refine)",
+      afterRefine?.refinements_used === 2,
+      `used=${afterRefine?.refinements_used}`,
+    );
+
+    const exportUrl = `${BASE}/api/contents/${contentId}/export`;
+    const docx = await fetch(`${exportUrl}?format=docx`, { headers: { Cookie: cookie } });
+    const docxBytes = new Uint8Array(await docx.arrayBuffer());
+    check("docx export downloads (200)", docx.status === 200);
+    check(
+      "…as a Word file with a safe ASCII file name",
+      docx.headers.get("content-type")?.includes("wordprocessingml") === true &&
+        docx.headers.get("content-disposition") ===
+          'attachment; filename="zasto-mali-timovi-treba-da-objavljuju-svake-nedelje.docx"',
+      String(docx.headers.get("content-disposition")),
+    );
+    check("…that is a zip archive", docxBytes[0] === 0x50 && docxBytes[1] === 0x4b);
+
+    const markdown = await fetch(`${exportUrl}?format=md`, { headers: { Cookie: cookie } });
+    check("markdown export is the saved text", (await markdown.text()).trim() === text.trim());
+
+    const badFormat = await fetch(`${exportUrl}?format=pdf`, { headers: { Cookie: cookie } });
+    check("an unknown export format is refused (400)", badFormat.status === 400);
+    const loggedOut = await fetch(`${exportUrl}?format=txt`);
+    check("export without the session cookie is 401", loggedOut.status === 401);
+
     console.warn("\nIsolation");
     const anonymous = await fetch(`${BASE}/api/generate/stream`, {
       method: "POST",

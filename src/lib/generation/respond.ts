@@ -26,6 +26,11 @@ type StreamResponseOptions = {
    * sample output, whose fixtures have one fixed length.
    */
   validateLength?: Length;
+  /**
+   * Set to false when the text is not a whole piece (a refined passage), so
+   * checking it against the format's contract would only produce noise.
+   */
+  validate?: boolean;
   /** Opens the content stream; must stop when `signal` aborts. */
   open(signal: AbortSignal): ContentStream;
   /** Aborts when the HTTP request is cancelled. */
@@ -54,7 +59,7 @@ const SSE_HEADERS = {
  * them indistinguishable on the wire apart from `meta.mode`.
  */
 export function createStreamResponse(options: StreamResponseOptions): Response {
-  const { type, meta, open, requestSignal, onFinish, validateLength } = options;
+  const { type, meta, open, requestSignal, onFinish, validateLength, validate = true } = options;
   const encoder = new TextEncoder();
   const abort = new AbortController();
 
@@ -111,7 +116,7 @@ export function createStreamResponse(options: StreamResponseOptions): Response {
         const done: StreamDone = {
           words: stats.words,
           chars: stats.chars,
-          warnings: validateContent(type, text, { length: validateLength }),
+          warnings: validate ? validateContent(type, text, { length: validateLength }) : [],
           inputTokens,
           outputTokens,
         };

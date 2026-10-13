@@ -38,6 +38,10 @@
     "languages": {
       "en": "Engleski",
       "sr": "Srpski"
+    },
+    "languageTargets": {
+      "en": "engleski",
+      "sr": "srpski"
     }
   },
   "home": {
@@ -340,7 +344,8 @@
       "chars": "{count, plural, one {# znak} few {# znaka} other {# znakova}}",
       "posts": "{count, plural, one {# objava} few {# objave} other {# objava}}",
       "postCounter": "Objava {post}: {chars} od {max} znakova",
-      "postsLabel": "Broj znakova po objavi"
+      "postsLabel": "Broj znakova po objavi",
+      "openSaved": "Otvori"
     },
     "warnings": {
       "title": "Provera formata",
@@ -397,15 +402,168 @@
       "llm_unavailable": "Nismo uspeli da dođemo do AI servisa. Pokušaj ponovo za koji trenutak.",
       "llm_refused": "AI je odbio da napiše ovaj tekst. Probaj da preformulišeš temu.",
       "llm_misconfigured": "AI servis nije ispravno podešen na ovoj instalaciji.",
-      "stream_failed": "Nešto je prekinulo pisanje. Pokušaj ponovo."
+      "stream_failed": "Nešto je prekinulo pisanje. Pokušaj ponovo.",
+      "refinement_cap_reached": "Iskorišćeno je svih 10 dorada za ovo generisanje. Sadržaj iz novog generisanja dobija novu kvotu.",
+      "sample_unsupported": "Sample režim može da prevede samo ugrađene demo tekstove. Za prevod sopstvenog teksta potreban je Live režim."
     }
   },
   "library": {
     "metaTitle": "Biblioteka",
     "title": "Biblioteka",
-    "description": "Pretraži, označi, uredi i izvezi sve što sačuvaš.",
-    "emptyTitle": "Biblioteka još nije napravljena",
-    "emptyDescription": "Sačuvani tekstovi, pretraga, oznake i izvoz stižu u jednoj od narednih faza izrade. U međuvremenu se ništa ne gubi: sadržaj se već čuva po nalogu."
+    "description": "Pretraži, označi, uredi i izvezi sve što je sačuvano.",
+    "results": "{count, plural, one {# tekst} few {# teksta} other {# tekstova}}",
+    "filters": {
+      "legend": "Filtriranje sačuvanih tekstova",
+      "search": "Pretraga",
+      "searchPlaceholder": "Pretraži naslove i tekst",
+      "searching": "Pretraga u toku…",
+      "type": "Format",
+      "allTypes": "Svi formati",
+      "tag": "Oznaka",
+      "allTags": "Sve oznake",
+      "sort": "Sortiranje",
+      "sorts": {
+        "updated": "Nedavno izmenjeno",
+        "newest": "Najnovije prvo",
+        "oldest": "Najstarije prvo"
+      },
+      "clear": "Poništi filtere"
+    },
+    "item": {
+      "open": "Otvori „{title}“",
+      "words": "{count, plural, one {# reč} few {# reči} other {# reči}}",
+      "updated": "Izmenjeno {time}",
+      "moreTags": "{count, plural, one {još # oznaka} few {još # oznake} other {još # oznaka}}"
+    },
+    "pagination": {
+      "label": "Stranice",
+      "previous": "Prethodna",
+      "next": "Sledeća",
+      "status": "Stranica {page} od {pages}"
+    },
+    "empty": {
+      "title": "Još ništa nije sačuvano",
+      "description": "Tekstovi sačuvani iz generatora stižu ovde, spremni za uređivanje, označavanje i izvoz.",
+      "action": "Generiši nešto"
+    },
+    "noResults": {
+      "title": "Nijedan tekst ne odgovara",
+      "description": "Probaj drugačiju pretragu ili manje filtera.",
+      "action": "Poništi filtere"
+    },
+    "loadError": {
+      "title": "Biblioteka nije mogla da se učita",
+      "description": "Tvoj sadržaj je bezbedan. Osveži stranicu i pokušaj ponovo."
+    }
+  },
+  "editor": {
+    "metaTitle": "Uređivanje",
+    "back": "Biblioteka",
+    "titleLabel": "Naslov",
+    "titlePlaceholder": "Daj ovom tekstu naslov",
+    "bodyLabel": "Tekst",
+    "bodyHint": "Markdown je podržan.",
+    "previewLabel": "Pregled",
+    "previewEmpty": "Još nema šta da se prikaže.",
+    "viewLabel": "Prikaz editora",
+    "tabs": {
+      "write": "Pisanje",
+      "preview": "Pregled"
+    },
+    "meta": {
+      "seoTitle": "SEO naslov",
+      "seoDescription": "SEO opis",
+      "subject": "Naslov mejla",
+      "preheader": "Podnaslov mejla",
+      "count": "{count} od {max} karaktera",
+      "post": "Objava {number}"
+    },
+    "save": {
+      "saved": "Sačuvano",
+      "saving": "Čuvanje…",
+      "dirty": "Nesačuvane izmene",
+      "error": "Nije sačuvano",
+      "retry": "Pokušaj ponovo"
+    },
+    "tags": {
+      "label": "Oznake",
+      "hint": "Opciono, najviše 20. Pritisni Enter ili zarez da dodaš oznaku.",
+      "placeholder": "Dodaj oznaku",
+      "full": "Dodato 20 od 20 oznaka",
+      "remove": "Ukloni oznaku {tag}"
+    },
+    "actions": {
+      "export": "Izvoz",
+      "formats": {
+        "txt": "Običan tekst (.txt)",
+        "md": "Markdown (.md)",
+        "docx": "Word (.docx)"
+      },
+      "exportSaveFirst": "Prvo sačuvaj izmene — izvoz koristi sačuvanu verziju.",
+      "exported": "Preuzimanje je počelo",
+      "duplicate": "Dupliraj",
+      "duplicated": "Kopija je napravljena",
+      "copySuffix": "kopija",
+      "delete": "Obriši",
+      "deleted": "Tekst je obrisan",
+      "undo": "Poništi poslednju izmenu",
+      "undone": "Izmena je poništena"
+    },
+    "deleteDialog": {
+      "title": "Obrisati ovaj tekst?",
+      "description": "„{title}“ se trajno uklanja iz biblioteke. Uklanjaju se i zakazane objave koje ga koriste.",
+      "confirm": "Obriši",
+      "cancel": "Otkaži"
+    },
+    "notFound": {
+      "title": "Ovaj tekst ne postoji",
+      "description": "Možda je obrisan ili link nije ispravan.",
+      "action": "Nazad u biblioteku"
+    },
+    "loadError": {
+      "title": "Tekst nije mogao da se učita",
+      "description": "Tvoj sadržaj je bezbedan. Osveži stranicu i pokušaj ponovo.",
+      "action": "Nazad u biblioteku"
+    },
+    "errors": {
+      "unauthenticated": "Sesija je istekla. Prijavi se ponovo da nastaviš.",
+      "invalid_input": "Nešto u ovom tekstu nije ispravno. Proveri naslov, tekst i oznake.",
+      "title_required": "Daj tekstu naslov od najviše 200 karaktera.",
+      "rate_limited": "Malo je prebrzo. Sačekaj minut i pokušaj ponovo.",
+      "not_found": "Ovaj tekst više ne postoji.",
+      "not_configured": "Biblioteka još nije podešena na ovoj instalaciji.",
+      "save_failed": "Izmene nisu sačuvane. I dalje su ovde — pokušaj ponovo.",
+      "delete_failed": "Tekst nije obrisan. Pokušaj ponovo.",
+      "duplicate_failed": "Kopija nije napravljena. Pokušaj ponovo."
+    },
+    "refine": {
+      "title": "Dorada",
+      "scopeAll": "Primenjuje se na ceo tekst. Označi deo teksta da doradiš samo njega.",
+      "scopeSelection": "Primenjuje se na označeni tekst ({count, plural, one {# karakter} few {# karaktera} other {# karaktera}}).",
+      "shorten": "Skrati",
+      "expand": "Proširi",
+      "tone": "Promeni ton",
+      "translate": "Prevedi na {language}",
+      "left": "Preostalo {left} od {max} dorada za ovo generisanje",
+      "tooLong": "To je {count} karaktera; jedna dorada obrađuje najviše {max}. Označi kraći deo.",
+      "empty": "Još nema teksta za doradu.",
+      "locked": "Tekst je zaključan dok je predlog otvoren.",
+      "labels": {
+        "shorten": "Skraćeno",
+        "expand": "Prošireno",
+        "tone": "Ton: {tone}",
+        "translate": "Prevedeno na {language}"
+      },
+      "region": "Predlog dorade",
+      "sampleNote": "Sample režim: unapred pripremljena transformacija koja pokazuje kako dorada radi. AI model nije pozvan.",
+      "accept": "Prihvati",
+      "discard": "Odbaci",
+      "stop": "Zaustavi",
+      "retry": "Pokušaj ponovo",
+      "accepted": "Predlog je primenjen",
+      "partial": "Ovaj predlog nije potpun. I dalje možeš da prihvatiš ono što je napisano.",
+      "resultTooLong": "Posle ove izmene tekst bi prešao {max} karaktera. Prvo skrati tekst."
+    }
   },
   "calendar": {
     "metaTitle": "Kalendar",

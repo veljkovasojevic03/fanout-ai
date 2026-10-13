@@ -4,9 +4,10 @@
 once: a blog post (with SEO meta), a LinkedIn post, an Instagram caption, an email newsletter and
 an X thread. UI in English and Serbian.
 
-> **Status: in development.** This is a portfolio project built phase by phase. Phase 0
-> (foundation and design system) is done; the generator, library, billing and publishing are not
-> built yet. The full README (demo link, architecture diagram, case study) lands in the final phase.
+> **Status: in development.** This is a portfolio project built phase by phase. Phases 0–4 are
+> done (foundation, data layer and auth, app shell, generator, library and editor); billing,
+> scheduling and publishing, and the landing page are not built yet. The full README (demo link,
+> architecture diagram, case study) lands in the final phase.
 
 ## What exists today
 
@@ -29,6 +30,13 @@ an X thread. UI in English and Serbian.
   `ANTHROPIC_API_KEY` is set and the global daily cap has room — same UI, same protocol
 - A URL source fetcher hardened against SSRF, and prompts that treat fetched text as untrusted
 - `/design/generator` — the streaming cards running on the public Sample-mode demo endpoint
+- The library: search (title and text), format and tag filters, sorting and pagination
+- An editor with a live preview per format, debounced autosave with a visible state, tags with
+  autocomplete, duplicate and delete
+- Refine — Shorten, Expand, Change tone, Translate — on a selection or the whole piece, streamed
+  as a suggestion you accept or discard (and can undo); capped per generation and rate limited
+- Export to `.txt`, `.md` and `.docx` (real Word headings, lists and links)
+- `/design/library` — the list, the editor and the previews with sample data
 
 ## Run locally
 

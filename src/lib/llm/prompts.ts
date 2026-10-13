@@ -26,12 +26,12 @@ Follow these rules for every piece:
 5. Write the whole piece in the content language named in the brief, whatever language the topic, keywords or source are written in.
 6. Output only the piece itself, in exactly the layout the <format> block describes. No introduction, no explanation, no notes, no closing remarks, and no code fences around it.`;
 
-const LANGUAGE: Record<AppLocale, string> = {
+export const LANGUAGE: Record<AppLocale, string> = {
   en: "English",
   sr: 'Serbian, written in Latin script (latinica) only — never Cyrillic. Write the way a native speaker writes for the web: natural word order and everyday vocabulary, not a translation from English. Address the reader informally ("ti")',
 };
 
-const TONE: Record<Tone, string> = {
+export const TONE: Record<Tone, string> = {
   professional: "Professional — clear, confident and respectful, without corporate jargon",
   casual: "Casual — relaxed and conversational, like talking to a friend who is good at this",
   funny: "Funny — light and witty, with humour that serves the point and never punches down",
@@ -110,13 +110,14 @@ Then a blank line and the body in Markdown:
 }
 
 /**
- * Makes untrusted text safe to place inside <source>…</source>: the wrapper tag
- * can no longer be closed or re-opened from within. Angle brackets of any tag
- * named "source", "brief", "format" or "system" are turned into harmless text.
+ * Makes untrusted text safe to place inside <source>…</source> (or the refine
+ * prompt's <text>…</text>): the wrapper tag can no longer be closed or
+ * re-opened from within. Angle brackets of any tag name our prompts use are
+ * turned into harmless text.
  */
 export function neutraliseSource(text: string): string {
   return text
-    .replace(/<\s*(\/?)\s*(source|brief|format|system)\b/gi, "‹$1$2")
+    .replace(/<\s*(\/?)\s*(source|brief|format|system|text|task|context)\b/gi, "‹$1$2")
     .replace(/\u0000/g, "");
 }
 

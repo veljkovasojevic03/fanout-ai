@@ -38,6 +38,10 @@
     "languages": {
       "en": "English",
       "sr": "Serbian"
+    },
+    "languageTargets": {
+      "en": "English",
+      "sr": "Serbian"
     }
   },
   "home": {
@@ -340,7 +344,8 @@
       "chars": "{count, plural, one {# character} other {# characters}}",
       "posts": "{count, plural, one {# post} other {# posts}}",
       "postCounter": "Post {post}: {chars} of {max} characters",
-      "postsLabel": "Characters per post"
+      "postsLabel": "Characters per post",
+      "openSaved": "Open"
     },
     "warnings": {
       "title": "Format check",
@@ -397,15 +402,168 @@
       "llm_unavailable": "We couldn't reach the AI service. Retry in a moment.",
       "llm_refused": "The AI declined to write this piece. Try rephrasing your topic.",
       "llm_misconfigured": "The AI service isn't set up correctly on this deployment.",
-      "stream_failed": "Something interrupted the writing. Retry to try again."
+      "stream_failed": "Something interrupted the writing. Retry to try again.",
+      "refinement_cap_reached": "You've used all 10 refinements for this generation. Pieces from a new generation get a fresh allowance.",
+      "sample_unsupported": "Sample mode can only translate the built-in demo pieces. Translating your own text needs Live mode."
     }
   },
   "library": {
     "metaTitle": "Library",
     "title": "Library",
     "description": "Search, tag, edit and export everything you have saved.",
-    "emptyTitle": "The library is not built yet",
-    "emptyDescription": "Saved pieces, search, tags and export arrive in a later build phase. Nothing is lost in the meantime: content is already stored per account."
+    "results": "{count, plural, one {# piece} other {# pieces}}",
+    "filters": {
+      "legend": "Filter saved pieces",
+      "search": "Search",
+      "searchPlaceholder": "Search titles and text",
+      "searching": "Searching…",
+      "type": "Format",
+      "allTypes": "All formats",
+      "tag": "Tag",
+      "allTags": "All tags",
+      "sort": "Sort by",
+      "sorts": {
+        "updated": "Recently updated",
+        "newest": "Newest first",
+        "oldest": "Oldest first"
+      },
+      "clear": "Clear filters"
+    },
+    "item": {
+      "open": "Open “{title}”",
+      "words": "{count, plural, one {# word} other {# words}}",
+      "updated": "Updated {time}",
+      "moreTags": "{count, plural, one {+# more tag} other {+# more tags}}"
+    },
+    "pagination": {
+      "label": "Pages",
+      "previous": "Previous",
+      "next": "Next",
+      "status": "Page {page} of {pages}"
+    },
+    "empty": {
+      "title": "Nothing saved yet",
+      "description": "Pieces you save from the generator land here, ready to edit, tag and export.",
+      "action": "Generate something"
+    },
+    "noResults": {
+      "title": "No pieces match",
+      "description": "Try a different search or fewer filters.",
+      "action": "Clear filters"
+    },
+    "loadError": {
+      "title": "We couldn't load your library",
+      "description": "Your content is safe. Reload the page to try again."
+    }
+  },
+  "editor": {
+    "metaTitle": "Edit",
+    "back": "Library",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Give this piece a title",
+    "bodyLabel": "Text",
+    "bodyHint": "Markdown is supported.",
+    "previewLabel": "Preview",
+    "previewEmpty": "Nothing to preview yet.",
+    "viewLabel": "Editor view",
+    "tabs": {
+      "write": "Write",
+      "preview": "Preview"
+    },
+    "meta": {
+      "seoTitle": "SEO title",
+      "seoDescription": "SEO description",
+      "subject": "Subject",
+      "preheader": "Preheader",
+      "count": "{count} of {max} characters",
+      "post": "Post {number}"
+    },
+    "save": {
+      "saved": "Saved",
+      "saving": "Saving…",
+      "dirty": "Unsaved changes",
+      "error": "Not saved",
+      "retry": "Retry"
+    },
+    "tags": {
+      "label": "Tags",
+      "hint": "Optional, up to 20. Press Enter or comma to add one.",
+      "placeholder": "Add a tag",
+      "full": "20 of 20 tags added",
+      "remove": "Remove tag {tag}"
+    },
+    "actions": {
+      "export": "Export",
+      "formats": {
+        "txt": "Plain text (.txt)",
+        "md": "Markdown (.md)",
+        "docx": "Word (.docx)"
+      },
+      "exportSaveFirst": "Save your changes first — the export uses the saved version.",
+      "exported": "Download started",
+      "duplicate": "Duplicate",
+      "duplicated": "Copy created",
+      "copySuffix": "copy",
+      "delete": "Delete",
+      "deleted": "Piece deleted",
+      "undo": "Undo last change",
+      "undone": "Change undone"
+    },
+    "deleteDialog": {
+      "title": "Delete this piece?",
+      "description": "“{title}” will be removed from your library for good. Scheduled posts that use it are removed too.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    },
+    "notFound": {
+      "title": "This piece doesn't exist",
+      "description": "It may have been deleted, or the link is wrong.",
+      "action": "Back to library"
+    },
+    "loadError": {
+      "title": "We couldn't load this piece",
+      "description": "Your content is safe. Reload the page to try again.",
+      "action": "Back to library"
+    },
+    "errors": {
+      "unauthenticated": "Your session has ended. Log in again to continue.",
+      "invalid_input": "Something in this piece isn't valid. Check the title, text and tags.",
+      "title_required": "Give the piece a title of up to 200 characters.",
+      "rate_limited": "You're going a bit fast. Wait a minute and try again.",
+      "not_found": "This piece no longer exists.",
+      "not_configured": "The library isn't set up on this deployment yet.",
+      "save_failed": "We couldn't save your changes. They are still here — try again.",
+      "delete_failed": "We couldn't delete this piece. Try again.",
+      "duplicate_failed": "We couldn't duplicate this piece. Try again."
+    },
+    "refine": {
+      "title": "Refine",
+      "scopeAll": "Applies to the whole piece. Select some text to refine only that part.",
+      "scopeSelection": "Applies to the selected text ({count, plural, one {# character} other {# characters}}).",
+      "shorten": "Shorten",
+      "expand": "Expand",
+      "tone": "Change tone",
+      "translate": "Translate to {language}",
+      "left": "{left} of {max} refinements left for this generation",
+      "tooLong": "That is {count} characters; one refine handles up to {max}. Select a shorter passage.",
+      "empty": "There is no text to refine yet.",
+      "locked": "The text is locked while a suggestion is open.",
+      "labels": {
+        "shorten": "Shortened",
+        "expand": "Expanded",
+        "tone": "Tone: {tone}",
+        "translate": "Translated to {language}"
+      },
+      "region": "Refine suggestion",
+      "sampleNote": "Sample mode: a canned transformation that shows how refine works. No AI model was called.",
+      "accept": "Accept",
+      "discard": "Discard",
+      "stop": "Stop",
+      "retry": "Try again",
+      "accepted": "Suggestion applied",
+      "partial": "This suggestion is incomplete. You can still accept what was written.",
+      "resultTooLong": "Applying this would take the piece past {max} characters. Shorten the text first."
+    }
   },
   "calendar": {
     "metaTitle": "Calendar",

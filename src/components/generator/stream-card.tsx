@@ -1,6 +1,8 @@
 "use client";
 
 import { Check, Copy, RotateCcw, Save, Square, TriangleAlert } from "lucide-react";
+import type { Route } from "next";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 
@@ -48,6 +50,7 @@ export function StreamCard({
   className,
 }: StreamCardProps) {
   const t = useTranslations();
+  const router = useRouter();
   const { state, stop, regenerate } = useContentStream({ request, onMeta });
   const { status, text } = state;
 
@@ -84,7 +87,12 @@ export function StreamCard({
       const result = await onSave(snapshot);
       if (result.ok) {
         setSavedText(snapshot);
-        toast.success(t("generate.card.savedToast"));
+        toast.success(t("generate.card.savedToast"), {
+          action: {
+            label: t("generate.card.openSaved"),
+            onClick: () => router.push(`/app/library/${result.id}` as Route),
+          },
+        });
       } else {
         toast.error(t(`generate.errors.${result.code}`));
       }

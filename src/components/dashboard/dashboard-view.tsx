@@ -1,4 +1,5 @@
 import { ArrowRight, Inbox, Sparkles, TriangleAlert } from "lucide-react";
+import type { Route } from "next";
 import Link from "next/link";
 import { getFormatter, getNow, getTranslations } from "next-intl/server";
 
@@ -208,22 +209,27 @@ export async function DashboardView({ account, guest, recent }: DashboardViewPro
             <Card>
               <ul className="divide-y divide-border">
                 {recent.items.map((item) => (
-                  <li key={item.id} className="flex items-center gap-3.5 px-5 py-3.5">
-                    <span className="flex size-9 shrink-0 items-center justify-center rounded-md border border-border bg-elevated text-muted">
-                      <ContentTypeIcon type={item.type} className="size-4" />
-                    </span>
-                    <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                      <p className="truncate text-sm font-medium">{item.title}</p>
-                      <p className="text-[13px] text-muted">
-                        {t(`common.formats.${item.type}`)} ·{" "}
-                        {t("dashboard.recent.words", { count: item.word_count })}
-                      </p>
-                    </div>
-                    <p className="hidden shrink-0 text-[13px] text-muted sm:block">
-                      {t("dashboard.recent.updated", {
-                        time: format.relativeTime(new Date(item.updated_at), now),
-                      })}
-                    </p>
+                  <li key={item.id}>
+                    <Link
+                      href={`/app/library/${item.id}` as Route}
+                      className="flex items-center gap-3.5 rounded-[inherit] px-5 py-3.5 transition-colors hover:bg-white/[0.03] focus-visible:-outline-offset-2"
+                    >
+                      <span className="flex size-9 shrink-0 items-center justify-center rounded-md border border-border bg-elevated text-muted">
+                        <ContentTypeIcon type={item.type} className="size-4" />
+                      </span>
+                      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                        <span className="truncate text-sm font-medium">{item.title}</span>
+                        <span className="text-[13px] text-muted">
+                          {t(`common.formats.${item.type}`)} ·{" "}
+                          {t("dashboard.recent.words", { count: item.word_count })}
+                        </span>
+                      </span>
+                      <span className="hidden shrink-0 text-[13px] text-muted sm:block">
+                        {t("dashboard.recent.updated", {
+                          time: format.relativeTime(new Date(item.updated_at), now),
+                        })}
+                      </span>
+                    </Link>
                   </li>
                 ))}
               </ul>

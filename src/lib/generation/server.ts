@@ -36,6 +36,14 @@ const ERRORS: Partial<Record<GenerateErrorCode, ErrorSpec>> = {
     message: "The regeneration limit for this generation is reached.",
   },
   save_failed: { status: 500, message: "The piece could not be saved." },
+  refinement_cap_reached: {
+    status: 403,
+    message: "The refinement limit for this generation is reached.",
+  },
+  sample_unsupported: {
+    status: 409,
+    message: "Sample mode has no canned version of this transformation.",
+  },
 };
 
 const SOURCE_ERROR: ErrorSpec = { status: 422, message: "The source URL could not be used." };
@@ -71,6 +79,13 @@ export const RATE_LIMITS = {
   sourceFetch: { windowSeconds: 600, max: 10 },
   save: { windowSeconds: 60, max: 30 },
   demo: { windowSeconds: 60, max: 40 },
+  // Library. Autosave fires at most once every couple of seconds while typing.
+  contentWrite: { windowSeconds: 60, max: 60 },
+  export: { windowSeconds: 60, max: 30 },
+  // Refine: a burst limit, plus a daily one because pieces that are not linked
+  // to a generation have no per-generation cap (spec Phase 4.3).
+  refine: { windowSeconds: 60, max: 10 },
+  refineDaily: { windowSeconds: 86_400, max: 60 },
 } as const;
 
 export type RateLimitName = keyof typeof RATE_LIMITS;

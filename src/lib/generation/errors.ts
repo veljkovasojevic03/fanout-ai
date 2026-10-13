@@ -24,6 +24,9 @@ export const GENERATE_ERROR_CODES = [
   "regeneration_cap_reached",
   // saving to the library
   "save_failed",
+  // refine (POST /api/refine)
+  "refinement_cap_reached",
+  "sample_unsupported",
   // client-side only: the connection dropped or the response was unreadable
   "network_error",
   ...SOURCE_ERROR_CODES,
