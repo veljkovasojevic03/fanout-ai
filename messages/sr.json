@@ -1,7 +1,9 @@
 {
   "meta": {
     "title": "Fanout AI — Jedna ideja. Pet formata.",
-    "description": "Pretvori jednu ideju u blog post, LinkedIn objavu, Instagram opis, email bilten i X nit — sve odjednom."
+    "description": "Pretvori jednu ideju u blog post, LinkedIn objavu, Instagram opis, email bilten i X nit — sve odjednom.",
+    "ogAlt": "Fanout AI — Jedna ideja. Pet formata.",
+    "ogLocale": "sr_RS"
   },
   "common": {
     "taglineLead": "Jedna ideja.",
@@ -43,16 +45,6 @@
       "sr": "srpski"
     }
   },
-  "home": {
-    "status": "U izradi",
-    "lead": "Daj Fanoutu jednu ideju i dobij pet tekstova spremnih za objavu, ispisanih jedan pored drugog.",
-    "formatsLabel": "Izlazni formati",
-    "note": "Nalozi i gostujuće sesije rade već danas. Generator, biblioteka i objavljivanje se grade fazu po fazu.",
-    "tryGuest": "Probaj kao gost",
-    "signUp": "Registruj se",
-    "logIn": "Prijavi se",
-    "openApp": "Otvori radni prostor"
-  },
   "notFound": {
     "metaTitle": "Stranica nije pronađena",
     "title": "Ova stranica se rasula u prazno.",
@@ -68,6 +60,150 @@
     "metaTitle": "Nešto je pošlo naopako · Fanout AI",
     "title": "Fanout AI se zaglavio.",
     "description": "Aplikacija se nije učitala. Novi pokušaj obično rešava stvar — tvoj sačuvani sadržaj je bezbedan."
+  },
+  "landing": {
+    "nav": {
+      "label": "Odeljci",
+      "features": "Mogućnosti",
+      "how": "Kako radi",
+      "pricing": "Cene",
+      "faq": "Pitanja",
+      "logIn": "Prijava",
+      "signUp": "Registracija",
+      "openApp": "Otvori radni prostor"
+    },
+    "hero": {
+      "eyebrow": "Portfolio projekat · demo ispod radi bez registracije",
+      "lead": "Daj Fanoutu jednu ideju. Dobij blog post, LinkedIn objavu, Instagram opis, email bilten i X nit — napisane jedno pored drugog, spremne za doradu i objavu.",
+      "tryGuest": "Probaj kao gost",
+      "signUp": "Napravi besplatan nalog",
+      "openApp": "Otvori svoj radni prostor",
+      "note": "Gosti dobijaju 3 besplatna generisanja. Bez emaila, bez kartice."
+    },
+    "demo": {
+      "title": "Probaj odmah ovde",
+      "description": "Izaberi temu i pritisni „Generiši“. Svih pet formata se piše istovremeno.",
+      "topicsLabel": "Tema za demo",
+      "topicLabel": "Tema",
+      "languageLabel": "Jezik sadržaja",
+      "generate": "Generiši",
+      "again": "Generiši ponovo",
+      "sampleNote": "Ovaj demo prikazuje unapred napisan primer sadržaja — bez prijave i bez poziva AI modelu. U aplikaciji tvoje teme piše Claude.",
+      "idle": "Čeka se ideja…",
+      "resultsLabel": "Rezultati demoa"
+    },
+    "features": {
+      "eyebrow": "Šta dobijaš",
+      "title": "Prva verzija je tek početak",
+      "description": "Fanout napiše svih pet tekstova, a zatim pomaže da ih završiš i objaviš.",
+      "items": {
+        "parallel": {
+          "title": "Pet formata, jedan pored drugog",
+          "body": "Svaki tekst prati oblik svoje platforme: SEO naslov i opis za blog, udica i heštegovi za mreže, naslov i pretekst za email, objave do 280 karaktera za X."
+        },
+        "sample": {
+          "title": "Primer i živi režim",
+          "body": "Bez API ključa Fanout prikazuje označen primer sadržaja kroz isti interfejs. Sa ključem, Claude piše uživo."
+        },
+        "editor": {
+          "title": "Uređivanje i dorada",
+          "body": "Markdown editor sa pregledom uživo. Skrati, proširi, promeni ton ili prevedi označeni deo — i poništi to."
+        },
+        "library": {
+          "title": "Biblioteka i izvoz",
+          "body": "Pretraga, oznake i filteri za sve što sačuvaš. Izvoz u .txt, .md ili pravi Word dokument."
+        },
+        "publish": {
+          "title": "Zakazivanje i objava",
+          "body": "Pošalji tekst u svoje sanduče ili na Discord kanal odmah, ili ga stavi u kalendar za kasnije."
+        },
+        "bilingual": {
+          "title": "Engleski i srpski",
+          "body": "Ceo interfejs na oba jezika, i sadržaj napisan prirodno na bilo kom od njih — nezavisno jedno od drugog."
+        },
+        "repurpose": {
+          "title": "Iskoristi ono što već imaš",
+          "body": "Kreni od linka ili nalepljenog teksta umesto od prazne teme i napravi pet tekstova od jednog članka."
+        },
+        "secure": {
+          "title": "Napravljeno da bude bezbedno",
+          "body": "Kvote se proveravaju atomski u bazi, svaka tabela je iza zaštite na nivou redova, webhookovi su potpisani, a preuzete stranice se tretiraju kao nepouzdan unos."
+        }
+      }
+    },
+    "how": {
+      "eyebrow": "Kako radi",
+      "title": "Od jedne ideje do pet objava u tri koraka",
+      "steps": {
+        "idea": {
+          "title": "Napiši jednu ideju",
+          "body": "Tema, ton i nekoliko ključnih reči. Po želji, link ili tekst od kog se polazi."
+        },
+        "stream": {
+          "title": "Gledaj kako nastaje pet tekstova",
+          "body": "Svi formati se pišu istovremeno. Zaustavi, kopiraj ili ponovo generiši bilo koji od njih."
+        },
+        "publish": {
+          "title": "Doradi i objavi",
+          "body": "Sačuvaj u biblioteku, doradi u editoru, izvezi — ili zakaži objavu."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Cene",
+      "title": "Počni besplatno. Pređi na Pro kad objavljuješ svake nedelje.",
+      "description": "Pro radi u Stripe test režimu: ovo je demo i pravi novac se ne prenosi.",
+      "startFree": "Počni besplatno",
+      "getPro": "Uzmi Pro",
+      "managePlan": "Upravljaj planom"
+    },
+    "faq": {
+      "eyebrow": "Pitanja",
+      "title": "Pitanja koja bi mogla da te zanimaju",
+      "items": {
+        "free": {
+          "question": "Da li je besplatno?",
+          "answer": "Da. Besplatan nalog ima 5 generisanja mesečno, a gostujuća sesija ukupno 3. Pro donosi 100 mesečno, sve dužine i jači model — u test režimu, pa se ništa ne naplaćuje."
+        },
+        "account": {
+          "question": "Da li mi treba nalog?",
+          "answer": "Ne za probu. Demo na ovoj stranici radi bez naloga, a gostujuća sesija otvara celu aplikaciju. Napravi nalog kad želiš da sačuvaš svoj rad — sadržaj iz gostujuće sesije ide sa tobom."
+        },
+        "sample": {
+          "question": "Šta je režim primera?",
+          "answer": "Kad AI ključ nije podešen ili je dnevni budžet potrošen, Fanout prikazuje unapred napisan primer sadržaja kroz potpuno isti interfejs. Uvek je označen kao „Primer izlaza“, pa ga nikad nećeš pomešati sa pravim rezultatom."
+        },
+        "ai": {
+          "question": "Koji AI piše sadržaj?",
+          "answer": "Claude, kompanije Anthropic. Besplatna i gostujuća generisanja koriste brz model, a Pro jači."
+        },
+        "billing": {
+          "question": "Da li će mi Pro biti naplaćen?",
+          "answer": "Ne. Naplata radi u Stripe test režimu. Iskoristi karticu 4242 4242 4242 4242 da vidiš ceo tok pretplate bez plaćanja."
+        },
+        "serbian": {
+          "question": "Da li može da piše na srpskom?",
+          "answer": "Da, latinicom i prirodnim jezikom. Jezik sadržaja se bira nezavisno od jezika interfejsa."
+        },
+        "publishing": {
+          "question": "Da li objavljuje na društvenim mrežama?",
+          "answer": "Objavljuje u tvoje email sanduče i na Discord kanale. Za LinkedIn, Instagram i X kopiraš gotov tekst — svaki je već u obliku te platforme."
+        },
+        "data": {
+          "question": "Ko može da vidi šta pišem?",
+          "answer": "Samo ti. Svaki tekst se čuva iza zaštite na nivou redova u bazi, a adrese Discord webhookova se nikad ne prikazuju ponovo u celosti."
+        }
+      }
+    },
+    "cta": {
+      "title": "Dovoljna je jedna ideja.",
+      "body": "Probaj Fanout kao gost — bez emaila — ili napravi besplatan nalog da sačuvaš sve što napišeš."
+    },
+    "footer": {
+      "testMode": "Demo — Stripe test režim, bez stvarne naplate.",
+      "github": "Izvorni kod na GitHubu",
+      "portfolio": "Portfolio projekat."
+    }
   },
   "wakingUp": {
     "title": "Demo se budi",

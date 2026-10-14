@@ -3,6 +3,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { FanoutMark, Wordmark } from "@/components/brand/wordmark";
+import { SpotlightCard } from "@/components/landing/spotlight-card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,6 +48,8 @@ const SECTIONS = [
   { id: "empty", label: "EmptyState" },
   { id: "usage", label: "UsageMeter" },
   { id: "menu", label: "DropdownMenu" },
+  { id: "accordion", label: "Accordion" },
+  { id: "landing", label: "Landing" },
 ] as const;
 
 const COLORS = [
@@ -549,6 +558,57 @@ export default function DesignPage() {
               <DropdownDemo />
             </CardContent>
           </Card>
+        </Section>
+
+        <Section
+          id="accordion"
+          title="Accordion"
+          description="The FAQ on the landing page. Enter or Space toggles; the arrow keys move between questions. One open at a time, and it can be closed again."
+        >
+          <Card>
+            <CardContent className="py-1">
+              <Accordion type="single" collapsible defaultValue="sample">
+                <AccordionItem value="sample">
+                  <AccordionTrigger>What is Sample mode?</AccordionTrigger>
+                  <AccordionContent>
+                    Pre-written content, streamed exactly like a real generation and always labelled
+                    &ldquo;Sample&rdquo;.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="charge">
+                  <AccordionTrigger>Will I be charged?</AccordionTrigger>
+                  <AccordionContent>No. Billing runs in Stripe test mode.</AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="languages">
+                  <AccordionTrigger>Which languages are supported?</AccordionTrigger>
+                  <AccordionContent>English and Serbian (Latin script).</AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </CardContent>
+          </Card>
+        </Section>
+
+        <Section
+          id="landing"
+          title="Landing surfaces"
+          description="SpotlightCard: a highlight follows the mouse (not touch; hidden under reduced motion). Below: the noise and grid textures with the accent glow, as behind the hero. Reveal (scroll fade-in) only acts on content that starts below the fold, so it is not shown here."
+        >
+          <div className="grid gap-4 md:grid-cols-2">
+            <SpotlightCard>
+              <div className="flex flex-col gap-2 p-6">
+                <p className="text-[15px] font-semibold">Move the pointer over me</p>
+                <p className="text-sm text-muted">Used for the bento feature grid.</p>
+              </div>
+            </SpotlightCard>
+            <div className="relative h-40 overflow-hidden rounded-xl border border-border">
+              <div aria-hidden="true" className="absolute inset-0 bg-grid" />
+              <div aria-hidden="true" className="absolute inset-0 bg-noise" />
+              <div
+                aria-hidden="true"
+                className="absolute -top-20 left-1/2 h-48 w-80 -translate-x-1/2 glow-accent"
+              />
+            </div>
+          </div>
         </Section>
       </main>
     </div>

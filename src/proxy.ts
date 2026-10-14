@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
+import { SIGNED_IN_HEADER } from "@/lib/auth/hint";
 import { updateSession } from "@/lib/supabase/proxy";
 
 const isProtectedPath = (pathname: string) => pathname === "/app" || pathname.startsWith("/app/");
@@ -21,6 +22,21 @@ export async function proxy(request: NextRequest) {
     // Keep any cookies the session refresh just set (e.g. clearing a dead session).
     for (const cookie of response.cookies.getAll()) redirect.cookies.set(cookie);
     return redirect;
+  }
+
+  // The landing page only needs to know which buttons to show. The proxy has
+  // just verified the session, so it says so in a request header instead of
+  // the page asking the Auth server again — one network round trip fewer
+  // before the first byte. Always overwritten, so a client cannot set it.
+  if (request.nextUrl.pathname === "/") {
+    const headers = new Headers(request.headers);
+    headers.set(SIGNED_IN_HEADER, userId ? "1" : "0");
+    const forwarded = NextResponse.next({ request: { headers } });
+    for (const cookie of response.cookies.getAll()) forwarded.cookies.set(cookie);
+    response.headers.forEach((value, key) => {
+      if (!key.toLowerCase().startsWith("x-middleware")) forwarded.headers.set(key, value);
+    });
+    return forwarded;
   }
 
   return response;

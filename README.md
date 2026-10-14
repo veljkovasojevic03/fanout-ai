@@ -4,9 +4,9 @@
 once: a blog post (with SEO meta), a LinkedIn post, an Instagram caption, an email newsletter and
 an X thread. UI in English and Serbian.
 
-> **Status: in development.** This is a portfolio project built phase by phase. Phases 0–6 are
+> **Status: in development.** This is a portfolio project built phase by phase. Phases 0–7 are
 > done (foundation, data layer and auth, app shell, generator, library and editor, plans and
-> billing, scheduling and publishing); the landing page is not built yet. The full README (demo
+> billing, scheduling and publishing, landing page); hardening and deployment come next. The full README (demo
 > link, architecture diagram, case study) lands in the final phase.
 
 ## What exists today
@@ -52,6 +52,10 @@ an X thread. UI in English and Serbian.
   minutes by a GitHub Actions workflow
 - `n8n/` — docker-compose and two importable workflows for real delivery on your own machine
 - `/design/publish` — the calendar, the dialogs and the destinations in every state
+- The landing page: a live Sample-mode demo in the hero (five cards streaming, no login, no AI
+  call), a bento feature grid, how it works, pricing, FAQ — in English and Serbian, with scroll
+  reveals and pointer highlights that switch off under `prefers-reduced-motion`
+- Metadata and a generated share image (`/og`) per language, `sitemap.xml` and `robots.txt`
 
 ## Run locally
 

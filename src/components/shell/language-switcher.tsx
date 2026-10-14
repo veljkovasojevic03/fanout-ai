@@ -46,7 +46,10 @@ export function LanguageSwitcher({ className }: { className?: string }) {
             type="button"
             lang={INTL_LOCALE[locale]}
             aria-pressed={active}
-            aria-label={active ? name : t("shell.language.switchTo", { language: name })}
+            // Starts with the visible code, so voice control ("click EN") matches the name.
+            aria-label={`${locale.toUpperCase()} — ${
+              active ? name : t("shell.language.switchTo", { language: name })
+            }`}
             onClick={() => choose(locale)}
             className={cn(
               "h-full rounded-[5px] px-2 font-mono text-[11px] font-medium tracking-wide uppercase transition-colors",

@@ -198,12 +198,23 @@ const limitRowSchema = z.object({
   max_length: z.enum(LENGTHS),
 });
 
+// plan_limits only changes with a migration, so a few minutes of caching per
+// server instance is safe — and keeps a database round trip off the landing
+// page's critical path.
+const CATALOG_TTL_MS = 10 * 60_000;
+let cachedCatalog: { value: Record<PaidPlan, PlanSummary>; at: number } | null = null;
+
 /**
  * What each plan includes, from `plan_limits` — the same table the quota
  * function reads, so the pricing cards cannot promise something else. Falls
- * back to the seeded defaults when the table cannot be read.
+ * back to the seeded defaults when the table cannot be read (not cached).
  */
 export async function getPlanCatalog(): Promise<Record<PaidPlan, PlanSummary>> {
+  if (cachedCatalog && Date.now() - cachedCatalog.at < CATALOG_TTL_MS) return cachedCatalog.value;
+  return loadPlanCatalog();
+}
+
+async function loadPlanCatalog(): Promise<Record<PaidPlan, PlanSummary>> {
   if (!isSupabaseAdminConfigured()) return PLAN_DEFAULTS;
   try {
     const { data, error } = await createSupabaseAdminClient()
@@ -217,6 +228,7 @@ export async function getPlanCatalog(): Promise<Record<PaidPlan, PlanSummary>> {
       const row = rows.find((candidate) => candidate.plan === plan);
       if (row) catalog[plan] = { generations: row.generations, maxLength: row.max_length };
     }
+    cachedCatalog = { value: catalog, at: Date.now() };
     return catalog;
   } catch {
     return PLAN_DEFAULTS;

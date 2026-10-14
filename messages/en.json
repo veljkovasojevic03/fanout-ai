@@ -1,7 +1,9 @@
 {
   "meta": {
     "title": "Fanout AI — One idea. Five formats.",
-    "description": "Turn one idea into a blog post, LinkedIn post, Instagram caption, email newsletter and X thread — streamed at once."
+    "description": "Turn one idea into a blog post, LinkedIn post, Instagram caption, email newsletter and X thread — streamed at once.",
+    "ogAlt": "Fanout AI — One idea. Five formats.",
+    "ogLocale": "en_US"
   },
   "common": {
     "taglineLead": "One idea.",
@@ -43,16 +45,6 @@
       "sr": "Serbian"
     }
   },
-  "home": {
-    "status": "In development",
-    "lead": "Give Fanout one idea and get five ready-to-publish pieces, streamed side by side.",
-    "formatsLabel": "Output formats",
-    "note": "Accounts and guest sessions work today. The generator, library and publishing are being built phase by phase.",
-    "tryGuest": "Try as guest",
-    "signUp": "Sign up",
-    "logIn": "Log in",
-    "openApp": "Open your workspace"
-  },
   "notFound": {
     "metaTitle": "Page not found",
     "title": "This page fanned out into nothing.",
@@ -68,6 +60,150 @@
     "metaTitle": "Something went wrong · Fanout AI",
     "title": "Fanout AI hit a snag.",
     "description": "The app failed to load. Trying again usually fixes it — your saved content is safe."
+  },
+  "landing": {
+    "nav": {
+      "label": "Sections",
+      "features": "Features",
+      "how": "How it works",
+      "pricing": "Pricing",
+      "faq": "FAQ",
+      "logIn": "Log in",
+      "signUp": "Sign up",
+      "openApp": "Open workspace"
+    },
+    "hero": {
+      "eyebrow": "Portfolio project · the demo below needs no sign-up",
+      "lead": "Give Fanout one idea. Get a blog post, a LinkedIn post, an Instagram caption, an email newsletter and an X thread — written side by side, ready to edit and publish.",
+      "tryGuest": "Try as guest",
+      "signUp": "Create a free account",
+      "openApp": "Open your workspace",
+      "note": "Guests get 3 free generations. No email, no card."
+    },
+    "demo": {
+      "title": "Try it right here",
+      "description": "Pick a topic and press Generate. All five formats stream at once.",
+      "topicsLabel": "Demo topic",
+      "topicLabel": "Topic",
+      "languageLabel": "Content language",
+      "generate": "Generate",
+      "again": "Generate again",
+      "sampleNote": "This demo streams hand-written sample content — no login and no AI call. In the app, your own topics are written by Claude.",
+      "idle": "Waiting for an idea…",
+      "resultsLabel": "Demo results"
+    },
+    "features": {
+      "eyebrow": "What you get",
+      "title": "The first draft is only the start",
+      "description": "Fanout writes all five pieces, then helps you finish them and get them out.",
+      "items": {
+        "parallel": {
+          "title": "Five formats, streamed side by side",
+          "body": "Each piece follows its platform's shape: SEO title and description for the blog, a hook and hashtags for social, subject and preheader for email, posts under 280 characters for X."
+        },
+        "sample": {
+          "title": "Sample and Live mode",
+          "body": "Without an API key, Fanout streams labelled sample content through the same interface. With one, Claude writes it live."
+        },
+        "editor": {
+          "title": "Edit and refine",
+          "body": "A Markdown editor with live preview. Shorten, expand, change the tone or translate a selection — and undo it."
+        },
+        "library": {
+          "title": "Library and export",
+          "body": "Search, tags and filters for everything you keep. Export to .txt, .md or a real Word document."
+        },
+        "publish": {
+          "title": "Schedule and publish",
+          "body": "Send a piece to your inbox or a Discord channel now, or put it on the calendar for later."
+        },
+        "bilingual": {
+          "title": "English and Serbian",
+          "body": "The whole interface in both languages, and content written natively in either — independently of each other."
+        },
+        "repurpose": {
+          "title": "Repurpose what you have",
+          "body": "Start from a link or pasted text instead of a blank topic, and turn one article into five."
+        },
+        "secure": {
+          "title": "Built to be safe",
+          "body": "Quotas are enforced atomically in the database, every table is behind row-level security, webhooks are signed, and fetched pages are treated as untrusted input."
+        }
+      }
+    },
+    "how": {
+      "eyebrow": "How it works",
+      "title": "From one idea to five posts in three steps",
+      "steps": {
+        "idea": {
+          "title": "Write one idea",
+          "body": "A topic, a tone and a few keywords. Optionally, a link or text to work from."
+        },
+        "stream": {
+          "title": "Watch five pieces appear",
+          "body": "Every format streams at the same time. Stop, copy or regenerate any of them."
+        },
+        "publish": {
+          "title": "Polish and publish",
+          "body": "Save to your library, refine in the editor, export — or schedule it to go out."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Pricing",
+      "title": "Start free. Upgrade when you publish every week.",
+      "description": "Pro runs in Stripe test mode: this is a demo, and no real money changes hands.",
+      "startFree": "Start free",
+      "getPro": "Get Pro",
+      "managePlan": "Manage your plan"
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Questions you might have",
+      "items": {
+        "free": {
+          "question": "Is it free?",
+          "answer": "Yes. A free account includes 5 generations a month, and a guest session 3 in total. Pro adds 100 a month, every length and the stronger model — in test mode, so nothing is charged."
+        },
+        "account": {
+          "question": "Do I need an account?",
+          "answer": "Not to try it. The demo on this page runs without one, and a guest session gives you the whole app. Create an account when you want to keep your work — your guest content comes with you."
+        },
+        "sample": {
+          "question": "What is Sample mode?",
+          "answer": "When no AI key is configured, or the daily budget is used up, Fanout streams pre-written sample content through exactly the same interface. It is always labelled “Sample output”, so you never mistake it for real output."
+        },
+        "ai": {
+          "question": "Which AI writes the content?",
+          "answer": "Claude, by Anthropic. Free and guest generations use a fast model; Pro uses a stronger one."
+        },
+        "billing": {
+          "question": "Will I be charged for Pro?",
+          "answer": "No. Billing runs in Stripe test mode. Use the card 4242 4242 4242 4242 to see the whole subscription flow without paying anything."
+        },
+        "serbian": {
+          "question": "Can it write in Serbian?",
+          "answer": "Yes, in Latin script and in a natural register. The content language is chosen separately from the interface language."
+        },
+        "publishing": {
+          "question": "Does it post to social networks?",
+          "answer": "It publishes to your own email inbox and to Discord channels. For LinkedIn, Instagram and X you copy the finished piece — each one is already in that platform's shape."
+        },
+        "data": {
+          "question": "Who can see what I write?",
+          "answer": "Only you. Every piece is stored behind row-level security in the database, and Discord webhook addresses are never shown back in full."
+        }
+      }
+    },
+    "cta": {
+      "title": "One idea is all it takes.",
+      "body": "Try Fanout as a guest — no email needed — or create a free account to keep everything you write."
+    },
+    "footer": {
+      "testMode": "Demo — Stripe test mode, no real charges.",
+      "github": "Source on GitHub",
+      "portfolio": "A portfolio project."
+    }
   },
   "wakingUp": {
     "title": "Demo is waking up",
